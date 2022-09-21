@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Input Viz - Guess Clinics Number</title>
+        <link rel="icon" href="Florida.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cormorant Garamond">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=DM Serif Display">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source Code Pro">
+        
+        <!--This is for icons button-->
+        <script src="https://kit.fontawesome.com/a2143a8170.js" crossorigin="anonymous"></script>
+        
+        <!--BG Color -->
+        <style>
+            .bg-color {
+             background-color: #faf2f6;
+             color: rgb(41, 41, 41);
+             /*background-color: rgb(27, 15, 52);*/
+             /*color: rgb(254, 253, 253);*/
+            }
+         </style>
+
+        <!--Text Style-->
+        <style>
+            h1.headline {
+                font-family: DM Serif Display;
+                font-size: 4rem;
+                font-weight: 800px;
+                line-height: 1em;
+                text-align:center;
+                color: #15133C;
+                margin-bottom: 15px;
+                margin-top: 5px;
+            }
+
+            h2.subhead {
+                font-size: 18px;
+                /*font-weight: bold;*/
+                line-height: 2em;
+                text-align:center;
+                color: rgb(41, 41, 41);
+                margin-bottom:0px;
+                margin-top: 30px;
+            }
+
+            .byline {
+                font-size: 1.1rem;
+                line-height: 0.75em;
+                font-weight: 600px;
+                margin-top: 18px;
+                text-align:center;
+                color: rgb(41, 41, 41);;
+            }
+            
+            .date {
+                font-size: 1rem;
+                line-height: 1em;
+                font-weight:600px;
+                letter-spacing:0.5px;
+                margin-top: 18px;
+                text-align:center;
+                color: rgb(41, 41, 41);;
+            }
+
+            h2.title {
+                font-family: DM Serif Display;
+                font-size: 25px;
+                font-weight: 400px;
+                line-height: 2em;
+                letter-spacing: 1.5px;
+                text-align:center;
+                color: #15133C;
+                /*padding-top:20px;*/
+
+            }
+
+            h2.subtitle {
+                font-family: DM Serif Display;
+                font-size: 18px;
+                font-weight: 300;
+                line-height: 2em;
+                text-align:center;
+                color: rgb(41, 41, 41);;
+                margin-bottom:10px;
+            }
+
+            p.body-text {
+                font-size: 1.15rem;
+                line-height: 1.8em;
+                text-align:justify;
+                margin-top:0px;
+                margin-bottom:15px;
+            }
+
+            p.caption {
+                font-family: Cormorant Garamond;
+                font-size: 1.1rem;
+                line-height: 1.4em;
+                padding-top: 5px;
+                padding-bottom: 20px;
+                text-align: center;
+            }
+
+            .findcode {
+                font-family: Cormorant Garamond;
+                font-size: 1.1rem;
+                line-height: 1.4em;
+                text-align:center;
+                margin-top:0;
+                margin-bottom:15px;
+            }
+
+        </style>
+
+        <!--Page Size-->
+        <style>
+            .header {
+                margin:auto;
+                max-width: 750px;
+                padding-top:80px;
+                padding-bottom:20px;
+            }
+
+            .story-body {
+                margin:auto;
+                max-width: 780px;
+            }
+
+            .footer {
+                margin:auto;
+                max-width: 750px;
+                padding-top:20px;
+                padding-bottom:20px;
+            }
+
+            .ending {
+                padding-top:0px;
+                padding-bottom:80px;
+                text-align:center;
+            }
+
+        </style>
+
+        <!--Chart Size-->
+        <style>
+            .horizontal-chart {
+                margin:auto;
+                max-width: 780px;
+            }
+
+            .map-chart {
+                margin:auto;
+                max-width: 550px;
+            }
+
+            .vertical-chart {
+                width:100%;
+                max-width:400px;
+                max-height:1000px;
+                margin-left:auto;
+                margin-right:auto;
+            }
+
+        </style>
+
+        <!--Photo Style--> 
+        <style>
+            img {
+                width: 700px;
+                text-align: center;
+                padding-top:20px;
+                padding-bottom:20px;
+            }
+
+            .center {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+
+        <!-- icon style-->
+        <style>
+            i.padding {padding-left: 30px;}
+            i.transparency {opacity: 1;}
+        </style>
+
+        <!-- JS style-->
+        <style>
+          button {
+            margin-top: 15px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            padding-left: 15px;
+            padding-right: 15px;
+            background-color: blanchedalmond;
+            cursor: pointer;
+            border-radius: 20px;
+            border:none; /*delete the default one*/
+            border: 1px solid grey; /*add my own border */          
+          }
+
+          select {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            padding-left: 5px;
+            background-color: blanchedalmond;
+            cursor: pointer;
+            border-radius: 20px;
+          }
+          
+          input.slider {
+            -webkit-appearance: none;
+            width: 400px;
+            height: 3px;
+            background: #937DC2;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+          }
+
+          input.slider:hover {
+            opacity: 100;
+          }
+        </style>        
+
+    </head>
+
+
+    <body class="bg-color">
+        <div class="header">
+            <h1 class="headline"> How Many Abortion Clinics Does Florida Have? </h1>
+            <h2 class="subhead">Guess 👉 Check 👉 Double Check</h2>
+            <p class="byline">By Eve Lu</p>
+            <p class="date">September 20, 2022</p>
+        </div>
+
+        <h2 class="title">Before you make a guess...</h2>
+        <div class="story-body">
+          <p class="body-text">
+            Florida has 67 counties in total and the largest number of abortion clinics that a county can have is 17. Some of the counties do not have a single clinic that provide abortion service. In this case, the slider scale here will range from 0 to 20 for better clarity 🔍.
+          </p>
+          <p class="body-text" style="text-align:center">
+            "I would say <input type="text" id="countyName" placeholder="Which County" size="18"> has about <output id="output" style="font-weight: bold;">...</output> abortion clinic(s)(?)"
+            <br>
+            <input class="slider" type="range" id="slider" max="20"/>
+            <br>
+            <button id="submit">Confirm Your Guess</button>
+          </p>
+          <script>
+
+            function show() {
+              output.textContent = slider.value;
+            }
+  
+            function storeData() {
+              alert("Thank you for your guess✨")
+              value = slider.value;
+              name = countyName.value
+  
+              row =[name,value];
+              api ="";
+  
+              api += "https://sheets.vsueiro.com/api/write"
+              api += "?"
+              api += "id=1oxntoO2pJkY4b0oyHEBPGIVTFM6Hc3SW-qjG5VSiG4w"
+              api += "&"
+              api += "range=Yi" 
+              api += "&"
+              api += "row="
+              api += JSON.stringify(row) // what json.stringify does is --> to turn "row"(a list) to string!
+  
+              fetch(api)
+
+              console.log(name,value)
+             }
+  
+            slider.oninput = show; 
+            window.onload = show;  
+            submit.onclick = storeData;
+
+          </script>
+        </div>
+
+        <h2 class="title">Then, check out the number!</h2>
+        <div class="story-body">
+          <p class="body-text">
+            Click the dropdown below and select the county where you live in. The answers will pop up right after your choice.
+          </p>
+        </div>
+        <div class="horizontal-chart" style="text-align:center">
+            <select id="countySelector">
+              <option disabled selected>Which County</option>
+              <option>Alachua County</option>
+              <option>Baker County</option>
+              <option>Bay County</option>
+              <option>Bradford County</option>
+              <option>Brevard County</option>
+              <option>Broward County</option>
+              <option>Calhoun County</option>
+              <option>Charlotte County</option>
+              <option>Citrus County</option>
+              <option>Clay County</option>
+              <option>Collier County</option>
+              <option>Columbia County</option>
+              <option>DeSoto County</option>
+              <option>Dixie County</option>
+              <option>Duval County</option>
+              <option>Escambia County</option>
+              <option>Flagler County</option>
+              <option>Franklin County</option>
+              <option>Gadsden County</option>
+              <option>Gilchrist County</option>
+              <option>Glades County</option>
+              <option>Gulf County</option>
+              <option>Hamilton County</option>
+              <option>Hardee County</option>
+              <option>Hendry County</option>
+              <option>Hernando County</option>
+              <option>Highlands County</option>
+              <option>Hillsborough County</option>
+              <option>Holmes County</option>
+              <option>Indian River County</option>
+              <option>Jackson County</option>
+              <option>Jefferson County</option>
+              <option>Lafayette County</option>
+              <option>Lake County</option>
+              <option>Lee County</option>
+              <option>Leon County</option>
+              <option>Levy County</option>
+              <option>Liberty County</option>
+              <option>Madison County</option>
+              <option>Manatee County</option>
+              <option>Marion County</option>
+              <option>Martin County</option>
+              <option>Miami-Dade County</option>
+              <option>Monroe County</option>
+              <option>Nassau County</option>
+              <option>Okaloosa County</option>
+              <option>Okeechobee County</option>
+              <option>Orange County</option>
+              <option>Osceola County</option>
+              <option>Palm Beach County</option>
+              <option>Pasco County</option>
+              <option>Pinellas County</option>
+              <option>Polk County</option>
+              <option>Putnam County</option>
+              <option>Santa Rosa County</option>
+              <option>Sarasota County</option>
+              <option>Seminole County</option>
+              <option>St. Johns County</option>
+              <option>St. Lucie County</option>
+              <option>Sumter County</option>
+              <option>Suwannee County</option>
+              <option>Taylor County</option>
+              <option>Union County</option>
+              <option>Volusia County</option>
+              <option>Wakulla County</option>
+              <option>Walton County</option>
+              <option>Washington County</option>
+            </select>
+        </div>
+        <script>
+
+            let anwsers = {
+              "Alachua County":2,
+              "Baker County":0,
+              "Bay County":0,
+              "Bradford County":0,
+              "Brevard County":0,
+              "Broward County":7,
+              "Calhoun County":0,
+              "Charlotte County":0,
+              "Citrus County":0,
+              "Clay County":0,
+              "Collier County":1,
+              "Columbia County":0,
+              "DeSoto County":0,
+              "Dixie County":0,
+              "Duval County":4,
+              "Escambia County":1,
+              "Flagler County":0,
+              "Franklin County":0,
+              "Gadsden County":0,
+              "Gilchrist County":0,
+              "Glades County":0,
+              "Gulf County":0,
+              "Hamilton County":0,
+              "Hardee County":0,
+              "Hendry County":0,
+              "Hernando County":0,
+              "Highlands County":0,
+              "Hillsborough County":6,
+              "Holmes County":0,
+              "Indian River County":0,
+              "Jackson County":0,
+              "Jefferson County":0,
+              "Lafayette County":0,
+              "Lake County":0,
+              "Lee County":2,
+              "Leon County":2,
+              "Levy County":0,
+              "Liberty County":0,
+              "Madison County":0,
+              "Manatee County":0,
+              "Marion County":0,
+              "Martin County":8,
+              "Miami-Dade County":17,
+              "Monroe County":0,
+              "Nassau County":0,
+              "Okaloosa County":0,
+              "Okeechobee County":0,
+              "Orange County":4,
+              "Osceola County":0,
+              "Palm Beach County":3,
+              "Pasco County":0,
+              "Pinellas County":5,
+              "Polk County":1,
+              "Putnam County":0,
+              "Santa Rosa County":0,
+              "Sarasota County":2,
+              "Seminole County":1,
+              "St. Johns County":0,
+              "St. Lucie County":1,
+              "Sumter County":0,
+              "Suwannee County":0,
+              "Taylor County":0,
+              "Union County":0,
+              "Volusia County":0,
+              "Wakulla County":0,
+              "Walton County":0,
+              "Washington County":0,
+
+            }
+
+            function showResult() {
+              let county = countySelector.value;
+              let place = 
+
+              alert(anwsers[county] + " abortion clinics is/are available in this county in Florida.")
+            }
+
+            countySelector.onchange = showResult
+        </script>
+        <br>
+        <div class="story-body">
+          <p class="body-text">
+            Don't be suprised by how many zeros you might get. Below is a visualized map that can help you better understand where these abortion clinics exactly distrubuted across the state. <br><i><strong>Note:</strong> zoom in for the county name🔍</i>
+          </p>
+        </div>
+        <br>
+
+        <h2 class="title">How Were They Scattered Across Florida?</h2>
+        <div class="map-chart">
+          <iframe title="How Many Abortion Clinics Were Scattered In Each County Across Florida?" aria-label="Map" id="datawrapper-chart-pf62n" src="https://datawrapper.dwcdn.net/pf62n/9/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="584"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script></script>
+        </div>
+        <br>
+        <br>
+
+    </body>
+
+    <footer class="bg-color">
+        <p></p>
+        <div class="findcode">
+            <p>If you' d like to check my code for this project, they are now available on <a href="?">GitHub</a>.</p>
+            <p>The data are available at <a href="https://docs.google.com/spreadsheets/d/1s5sJA6PQ8cR8a-05oj_POX6H18a8SrCal_grbBeXgUQ/edit?usp=sharing">Google Sheet</a>.</p>
+        </div>
+        <!--sometimes icon not showing up is because of subsription plan!-->
+        <div class="ending four-icon">
+            <a href="https://github.com/luyi-eve" title="Github" target="_blank"><span class="title"><i class="fab fa-github fa-2xs transparency"></i></span><a>
+            <a href="https://twitter.com/luyi_2021" title="Twitter" target="_blank"><span class="title"><i class="fab fa-twitter padding fa-2xs transparency"></i></span><a>
+            <a href="https://luyi-eve.github.io/" title="Home" target="_blank"><span class="title"><i class="fa-solid fa-rotate-left fa-2xs padding transparency"></i></span><a>
+            <a href="https://www.instagram.com/eseve__ly/" title="Instagram" target="_blank"><span class="title"><i class="fa-brands fa-instagram padding fa-2xs transparency"></i></span><a>
+            <a href="mailto:eseve@live.com"><span class="title"><i class="fas fa-envelope padding fa-2xs transparency"></i></span></a>
+        </div>
+    </footer>
+

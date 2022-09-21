@@ -1,2 +1,2 @@
-# input-viz-guess-clinics-number
+# Input Visualization
  

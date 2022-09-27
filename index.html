@@ -20,8 +20,6 @@
             .bg-color {
              background-color: #faf2f6;
              color: rgb(41, 41, 41);
-             /*background-color: rgb(27, 15, 52);*/
-             /*color: rgb(254, 253, 253);*/
             }
          </style>
 
@@ -158,30 +156,6 @@
                 max-width: 550px;
             }
 
-            .vertical-chart {
-                width:100%;
-                max-width:400px;
-                max-height:1000px;
-                margin-left:auto;
-                margin-right:auto;
-            }
-
-        </style>
-
-        <!--Photo Style--> 
-        <style>
-            img {
-                width: 700px;
-                text-align: center;
-                padding-top:20px;
-                padding-bottom:20px;
-            }
-
-            .center {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-            }
         </style>
 
         <!-- icon style-->
@@ -190,7 +164,7 @@
             i.transparency {opacity: 1;}
         </style>
 
-        <!-- JS style-->
+        <!-- button/selector style-->
         <style>
           button {
             margin-top: 15px;
@@ -198,7 +172,7 @@
             padding-bottom: 8px;
             padding-left: 15px;
             padding-right: 15px;
-            background-color: blanchedalmond;
+            background-color: cornsilk;
             cursor: pointer;
             border-radius: 20px;
             border:none; /*delete the default one*/
@@ -209,7 +183,7 @@
             padding-top: 8px;
             padding-bottom: 8px;
             padding-left: 5px;
-            background-color: blanchedalmond;
+            background-color: cornsilk;
             cursor: pointer;
             border-radius: 20px;
             border:none; /*delete the default one*/
@@ -230,15 +204,23 @@
           input.slider:hover {
             opacity: 100;
           }
-        </style>        
-
+        </style>   
+        
+        <!--Tooltips for map-->
+        <style>
+            #tooltip {
+            background: cornsilk;
+            border: 0.8px solid black;
+            border-radius: 5px;
+            padding: 10px;
+            }
+        </style>
     </head>
-
 
     <body class="bg-color">
         <div class="header">
             <h1 class="headline"> How Many Abortion Clinics Does Florida Have? </h1>
-            <h2 class="subhead">Guess 👉 Check 👉 Double Check</h2>
+            <h2 class="subhead">Guess 👉 Check</h2>
             <p class="byline">By Eve Lu</p>
             <p class="date">September 20, 2022</p>
         </div>
@@ -249,55 +231,8 @@
             Florida has 67 counties in total and the largest number of abortion clinics that a county can have is 17. Some of the counties do not have a single clinic that provide abortion service. In this case, the slider scale here will range from 0 to 20 for better clarity 🔍.
           </p>
           <p class="body-text" style="text-align:center">
-            "I would say <input type="text" id="countyName" placeholder="Which County" size="18"> has about <output id="output" style="font-weight: bold;">...</output> abortion clinic(s)(?)"
-            <br>
-            <input class="slider" type="range" id="slider" max="20"/>
-            <br>
-            <button id="submit">Confirm Your Guess</button>
-          </p>
-          <script>
-
-            function show() {
-              output.textContent = slider.value;
-            }
-  
-            function storeData() {
-              alert("Thank you for your guess✨")
-              value = slider.value;
-              name = countyName.value
-  
-              row =[name,value];
-              api ="";
-  
-              api += "https://sheets.vsueiro.com/api/write"
-              api += "?"
-              api += "id=1oxntoO2pJkY4b0oyHEBPGIVTFM6Hc3SW-qjG5VSiG4w"
-              api += "&"
-              api += "range=Yi" 
-              api += "&"
-              api += "row="
-              api += JSON.stringify(row) // what json.stringify does is --> to turn "row"(a list) to string!
-  
-              fetch(api)
-
-              console.log(name,value)
-             }
-  
-            slider.oninput = show; 
-            window.onload = show;  
-            submit.onclick = storeData;
-
-          </script>
-        </div>
-
-        <h2 class="title">Then, check out the number!</h2>
-        <div class="story-body">
-          <p class="body-text">
-            Click the dropdown below and select the county where you live in. The answers will pop up right after your choice.
-          </p>
-        </div>
-        <div class="horizontal-chart" style="text-align:center">
-            <select id="countySelector">
+            "I would say 
+            <select id="counties">
               <option disabled selected>Which County</option>
               <option>Alachua County</option>
               <option>Baker County</option>
@@ -366,7 +301,119 @@
               <option>Wakulla County</option>
               <option>Walton County</option>
               <option>Washington County</option>
-            </select>
+            </select> 
+            has about <output id="output" style="font-weight: bold;">...</output> abortion clinic(s)(?)"
+            <br>
+            <input class="slider" type="range" id="slider" max="20"/>
+            <br>
+            <button id="submit">Confirm Your Guess</button>
+          </p>
+          <script>
+
+            function show() {
+              output.textContent = slider.value;
+            }
+  
+            function storeData() {
+              alert("Thank you for your guess✨")
+              value = slider.value;
+              name = counties.value
+  
+              row =[name,value];
+              api ="";
+  
+              api += "https://sheets.vsueiro.com/api/write"
+              api += "?"
+              api += "id=1oxntoO2pJkY4b0oyHEBPGIVTFM6Hc3SW-qjG5VSiG4w"
+              api += "&"
+              api += "range=Yi" 
+              api += "&"
+              api += "row="
+              api += JSON.stringify(row) // what json.stringify does is --> to turn "row"(a list) to string!
+  
+              fetch(api)
+
+              console.log(name,value)
+             }
+  
+            slider.oninput = show; 
+            window.onload = show;  
+            submit.onclick = storeData;
+
+          </script>
+        </div>
+        <!--
+        <div class="horizontal-chart" style="text-align:center">
+          <select id="countySelector">
+            <option disabled selected>Which County</option>
+            <option>Alachua County</option>
+            <option>Baker County</option>
+            <option>Bay County</option>
+            <option>Bradford County</option>
+            <option>Brevard County</option>
+            <option>Broward County</option>
+            <option>Calhoun County</option>
+            <option>Charlotte County</option>
+            <option>Citrus County</option>
+            <option>Clay County</option>
+            <option>Collier County</option>
+            <option>Columbia County</option>
+            <option>DeSoto County</option>
+            <option>Dixie County</option>
+            <option>Duval County</option>
+            <option>Escambia County</option>
+            <option>Flagler County</option>
+            <option>Franklin County</option>
+            <option>Gadsden County</option>
+            <option>Gilchrist County</option>
+            <option>Glades County</option>
+            <option>Gulf County</option>
+            <option>Hamilton County</option>
+            <option>Hardee County</option>
+            <option>Hendry County</option>
+            <option>Hernando County</option>
+            <option>Highlands County</option>
+            <option>Hillsborough County</option>
+            <option>Holmes County</option>
+            <option>Indian River County</option>
+            <option>Jackson County</option>
+            <option>Jefferson County</option>
+            <option>Lafayette County</option>
+            <option>Lake County</option>
+            <option>Lee County</option>
+            <option>Leon County</option>
+            <option>Levy County</option>
+            <option>Liberty County</option>
+            <option>Madison County</option>
+            <option>Manatee County</option>
+            <option>Marion County</option>
+            <option>Martin County</option>
+            <option>Miami-Dade County</option>
+            <option>Monroe County</option>
+            <option>Nassau County</option>
+            <option>Okaloosa County</option>
+            <option>Okeechobee County</option>
+            <option>Orange County</option>
+            <option>Osceola County</option>
+            <option>Palm Beach County</option>
+            <option>Pasco County</option>
+            <option>Pinellas County</option>
+            <option>Polk County</option>
+            <option>Putnam County</option>
+            <option>Santa Rosa County</option>
+            <option>Sarasota County</option>
+            <option>Seminole County</option>
+            <option>St. Johns County</option>
+            <option>St. Lucie County</option>
+            <option>Sumter County</option>
+            <option>Suwannee County</option>
+            <option>Taylor County</option>
+            <option>Union County</option>
+            <option>Volusia County</option>
+            <option>Wakulla County</option>
+            <option>Walton County</option>
+            <option>Washington County</option>
+          </select>
         </div>
         <script>
 
@@ -450,17 +497,303 @@
 
             countySelector.onchange = showResult
         </script>
+        -->
         <br>
+        <h2 class="title">Then, check out the map!</h2>
+        <h2 class="subtitle">How Were The Clinics Scattered Across Florida?</h2>
         <div class="story-body">
           <p class="body-text">
-            Don't be suprised by how many zeros you might get. Below is a visualized map that can help you better understand where these abortion clinics exactly distrubuted across the state. <br><i><strong>Note:</strong> zoom in for the county name🔍</i>
+            Below is a visualized map that can help you better understand where these abortion clinics exactly distrubuted across the state. Hover around the county where you live to see if you're right about the anwsers 🤯. Don't be suprised by how many zeros you might get 🤡 🔍.
           </p>
         </div>
         <br>
-
-        <h2 class="title">How Were They Scattered Across Florida?</h2>
         <div class="map-chart">
-          <iframe title="How Many Abortion Clinics Were Scattered In Each County Across Florida?" aria-label="Map" id="datawrapper-chart-pf62n" src="https://datawrapper.dwcdn.net/pf62n/9/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="584"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script></script>
+            <div id="tooltip" display="none" style="position: absolute; display: none;"></div>
+            <?xml version="1.0" encoding="UTF-8"?>
+            <svg id="exportSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 436.54 434.45">
+            <defs>
+                <style>
+                .cls-1 {
+                    fill: #ee5c9d;
+                }
+    
+                .cls-1,
+                .cls-2,
+                .cls-3,
+                .cls-4,
+                .cls-5,
+                .cls-6,
+                .cls-7,
+                .cls-8,
+                .cls-9,
+                .cls-10 {
+                    stroke: #fff;
+                    stroke-miterlimit: 10;
+                    stroke-width: .5px;
+                }
+    
+                .cls-2 {
+                    fill: #fccec3;
+                }
+    
+                .cls-3 {
+                    fill: #fcafb8;
+                }
+    
+                .cls-4 {
+                    fill: #fbdec9;
+                }
+    
+                .cls-5 {
+                    fill: #fcbfbe;
+                }
+    
+                .cls-6 {
+                    fill: #fb9fb2;
+                }
+    
+                .cls-7 {
+                    fill: #f769a1;
+                }
+    
+                .cls-8 {
+                    fill: #7a0177;
+                }
+    
+                .cls-9 {
+                    fill: #fa8ead;
+                }
+    
+                .cls-10 {
+                    fill: #f97ca7;
+                }
+    
+                g.tooltip:hover .tooltiptext {
+                    visibility: visible;
+                    opacity: 1;
+                    content:"Tooltip text";
+                  }
+    
+                </style>
+            </defs>
+            <g id="regions-svg">
+                <g id="Hardee-svg" onmousemove="showTooltip(evt, '<strong>Hardee County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();" >
+                <path id="Hardee" class="cls-4" d="M316.94,227.68l28.69-.18,.12,20.19-17.3,.13-11.53,.18,.02-20.32Z" />
+                </g>
+                <g id="Charlotte-svg" onmousemove="showTooltip(evt, '<strong>Charlotte County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Charlotte" class="cls-4" d="M298.2,273.91l7.07,.06v-5.8s11.61,.04,11.61,.04h3.82s.57-.22,.57-.22l24.72-.05-.08,17.42-21.53,.1h-7.71s.03-.24,.03-.24v-1s.37-.88,.37-.88l-.18-1.27-.03-1.11,.11-1.34-.15-1.18-.43-.36-1.43-.43-.15-1.18,.17-1.09,.4-.32h.91s.34-.23,.34-.23l.03-.48-.09-.77-.8-.52-1.85,.03-.54,.23-.43,.59-.74,1.27-1.45,.05-.46,.16-.34,.41,.15,1.29,1.01,2.99,.55,4.1-.26,.43-1.28,.3-.34,.43-.54,.11-1.23,.23-.66-.11-.14-.86-.69-.09-.51-.16-1.29-.25h-.43s-1.03-2.51-1.03-2.51l-.74-.91-2.94-4.41-1.4-2.49Z" />
+                </g>
+                <g id="Baker-svg" onmousemove="showTooltip(evt, '<strong>Baker County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Baker" class="cls-4" d="M316.59,48.48l.05,5.87,.02,5.71v2.9s-5.3,.02-5.3,.02l-12.39,.27-4.78,.09-.86,.09,.08-20.21-.17-9.33h.03s2.31,.18,2.31,.18l2.48,.18,4.98,.36,1.65,.11,.47,.04,2.01,.15,.03,.11-.25,.16-.25,.09-.25,.14-.27,.32-.19,.75-.03,.5,.06,.27,.25,.43,.08,.38-.05,.23,.19,.48,.11,.16,.36,.23,.33,.36,.36,.45,.28,.45,.03,.7-.19,.36-.19,.57,.03,.23,.08,.09,.06,.25,.06,.48-.14,.5-.19,.27-.03,.54,.36,1.54,.64,1.49,.17,.18,.36,.14,.19,.34,.5,.59,.08,.07,.28,.04,.19,.02,.22-.14,.83-.23,1.54-.28,.66-.07,.11,.04,.08,.07-.03,.09,.41,.29,.77,.13,.72-.02,.47-.09,.58-.12v-.02Z" />
+                </g>
+                <g id="Lafayette-svg" onmousemove="showTooltip(evt, '<strong>Lafayette County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Lafayette" class="cls-4" d="M241.54,55.04l6.41,.07,.41-.02-.34,1.45,.74,.73-.56,1.76,.05,1.11,.91,1-.34,1.11,.79,1.12-.04,1.45,.74,.66,.64-.15,.94,.78,1.36-1.03,1.63,.85,.89-.45,.3,.86,2.38,.65,.16,1.04,1.44,.73,1.6,1.48,.57,1.41,1.47,.32,.83,.86,.13,1.18,.58,1.11,1.11,.07,.6,1.79-.31,.59,.77,1.09-.36,.54,1.33-.24,.88,.89,.22,1.34-.84,1.42-.17,1.2-1.58,.18-2.19-.1-20.58,.06h-1.94s0-4.32,0-4.32h-1.03s.29-19.74,.29-19.74l.12-.93v-3.92Z" />
+                </g>
+                <g id="Palm-svg_Beach-svg" onmousemove="showTooltip(evt, '<strong>Palm Beach County</strong> <br> 3 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Palm_Beach" class="cls-3" d="M385.81,272.47l17.95-.19,25.79-.38-.02-.93,3.68-.05,2.08,7.3,.96,4.13v1.54s-.03,.11-.03,.11h-.23s-.08,.35-.08,.35l.35,3.35,.02,.95-.14,1.66,.11,4.19-.15,2.84-.61,3.95-.52,4.29-.47,7.17-.08,.07-.15,.93-1.07-.32-.34,.23-.03-.29h-1.23s-.54,.01-.54,.01l-4.41,.08-2.74-.86-2.8-.88v1.4s-34.53,.55-34.53,.55l.08-.79-.26-6.7-.02-1.59-.57-32.14Z" />
+                </g>
+                <g id="Sumter-svg" onmousemove="showTooltip(evt, '<strong>Sumter County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Sumter" class="cls-4" d="M301.8,141.01l20.62-.03,.08,4.83-.1,35.75v2.4s-1.62,.23-1.62,.23l-.51-.84-1.49-.38-2.05,.73,.02-10.92,.02-2.83-.79-.68-1.68,.41-.73-1.22-1.24-.16-.42-1.27-1.04-.52-.53,.64-1.86-.77-.84,.09-.56-1.27-2.28-2.9,.2-.77-1.01-.47,.67-.75,.19-1,.64-1.25-.03-1.06,2.21-2.41,1.23-.32,.3-1.61,.87-.64-.59-.68-.2-1.22-1.32-.88-.98-1.15-.79-.52-.37-1.04-1.82-1.38-.23-.91-1.04-1.79-.11-.72-.81-.75Z" />
+                </g>
+                <g id="Gilchrist-svg" onmousemove="showTooltip(evt, '<strong>Gilchrist County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Gilchrist" class="cls-4" d="M266.86,83.99l1.58-.18,.17-1.2,.84-1.42-.22-1.34,.95-1.58,1.77-.11,1.81-1.29,.5-.2,.66,.64,.55-.16-.22,1.09,.33,.98,.58-.11,.33,1.22,.94,1.32,1.44,.84,1,.89,2,.25,.11,17.51-5.76,.15-.03-1-.92-.48-4.81-.45-4.62-.02-1,.38-.97-1.52-.08-1.04,.92-.97,.31-1.52-.41-.52,.4-2.24,.75,.21-.6-1.68,.64-1.2-.64-.66,.87-2.1,.83-.54-.86-.98,.84-.97Z" />
+                </g>
+                <g id="DeSoto-svg" onmousemove="showTooltip(evt, '<strong>DeSoto County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="DeSoto" class="cls-4" d="M316.9,256.61l.03-8.61,11.53-.18,17.3-.13,.23,20.25-24.72,.05-.57,.23h-3.82s.02-11.61,.02-11.61Z" />
+                </g>
+                <g id="St.-svg_Lucie-svg" onmousemove="showTooltip(evt, '<strong>St. Lucie County</strong> <br> 1 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="St._Lucie" class="cls-2" d="M397.35,232.75l20.97-.27,.58,2.14,.65,1.6h.48s1.71,5.24,1.71,5.24l.73,2.66,1.24,2.52,.42,1.22,1.69,3.91-5.03,.05,.02,1.2-.48,.24,.5,.72v1.65s-23.03,.38-23.03,.38l-.45-23.24Z" />
+                </g>
+                <g id="Broward-svg" onmousemove="showTooltip(evt, '<strong>Broward County</strong> <br> 7 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Broward" class="cls-7" d="M386.58,313.7l34.53-.55v-1.4s2.8,.88,2.8,.88l2.74,.86,4.41-.08h.54s1.23-.01,1.23-.01l.03,.29,.34-.23,1.07,.32-.03,.16-.19,3.58-.33,1-.21,1.16-.59,5.56-.17,3.4-.11,.23-.14,.39-.37,6.65v.75s-.36,.05-.36,.05l-2.47,.09-6.69,.3-.98,.04,.02,.91-3.33,.06-19.49,.31-.02-1.45-11.44,.11-.53-12.75-.13-5.71-.15-4.91Z" />
+                </g>
+                <g id="Clay-svg" onmousemove="showTooltip(evt, '<strong>Clay County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Clay" class="cls-4" d="M316.66,60.05l16.25-.23,1.77-.28,1.72,.28,.16-.16,1.19,.06-.6,1.23-.1,1.79,.7,1.56v2.54s-.5,1.29-.5,1.29v2.11s1.08,1.58,1.08,1.58l2.64,1.66,1.37,1.69,.12,1.18-.52,1.48,.55,2.67,1.04,2.3-4.6,.12-8.63,.21-.52,.66-2.29,1.76-2.72,.44-.8,.84-.44,1.63-.47,.57-2.11,.03-1.77,.51-1.24,1.39h-1.17s.19-1.88,.19-1.88l-.29-26.12v-2.9Z" />
+                </g>
+                <g id="Okaloosa-svg" onmousemove="showTooltip(evt, '<strong>Okaloosa County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Okaloosa" class="cls-4" d="M48.64,2.14l2.3,.13h.93s.08,.01,.08,.01h.11s1.06,.18,1.06,.18l1.01,.04,.57,.04,.77,.03,5.48,.15h.25s2.46,.21,2.46,.21h.38s.74,.04,.74,.04l2.36,.04,.19,.03,2.82,.07,.74,.02h.16s.03,0,.03,0l-.91,19.79-.99,20.78-.85-.14-3.33-.34-2.01,.02-1.28-.34-5.9-.82-6.71,.05-2.82,.24,.85-15.21,.1-.56,1.4-24.46Z" />
+                </g>
+                <g id="Seminole-svg" onmousemove="showTooltip(evt, '<strong>Seminole County</strong> <br> 1 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Seminole" class="cls-2" d="M353.69,152.33l.05-.45-.35-1.54,.41-1.02,1.67-1.42,.97-1.44-.06-.36,.88,1.1-.41,.89,2.25,.93,5.46,.06,.92,1.98,.9,.67,.67-.35,.26,1.02,1.31-.67,1.07,.03,.82-1.53-.17-.47,1.17-.49,1.19,.82,.53-.23,1.03,1.64,.35,1.36-.46,1.57,1.45,1.64,.1,1,1.08,1.1-.27,1.25,.62,.38,.58,1.78-.33,.32,1.17,1.53-8.22,.12-11.51,.28-.07-1.95-7.49,.02-.09-.25v-4.55s.97-.12,.97-.12l1.11-1.48,.45-3.15Z" />
+                </g>
+                <g id="Highlands-svg" onmousemove="showTooltip(evt, '<strong>Highlands County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Highlands" class="cls-4" d="M345.64,227.5h24.62s0,2.99,0,2.99l-.73,.44-.07,1.11-.54-.02-.7,1.14-.74,.08-1.34,1.87,.92,1.19-.38,1.36,1.28,.49,.64,1.22,1.52,1.07,.46,.86-.15,1.45,1,.56-.02,.63,1.6,.96,.99-.44,2.77,1.71,.09,.68-.79,.58,.26,.79,.74,.29,.3,1.45h1.22s.37,.43,.37,.43l-.04,1.77,.33,1.13,.74,.31-.05,.97,.64,.9,1.13-.49,.52,.95-13.28,.22,.12,5.8-5.83,.1,.08,5.84-16.38,.07-.97-.02-.23-20.25-.12-20.19Z" />
+                </g>
+                <g id="Union-svg" onmousemove="showTooltip(evt, '<strong>Union County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Union" class="cls-4" d="M293.33,63.42l.86-.09,4.78-.09,12.39-.27,.25,1.04-.52,1.13-1.27,.71-.44,1.61-.52,.68-1.19,.8-1.05,1.23-1.94,.41-.77,1.9-1.91,2.81-1.05,.07-.97-.38-.3,1.29-.66,.57-.64-.14-1.16,.64-1.61,.18-1.72-.57-1.33,.34-.69-.86-2.36-.36-.25,.27-.19-1.16-1.27-.36-.8-.73-.39-1.07,.17-1.29,1.63-.61,.53-2.33,.94-1.38,1.19-.86,1.72-.52,.69-.57,.19-1.2-.33-.84Z" />
+                </g>
+                <g id="Calhoun-svg" onmousemove="showTooltip(evt, '<strong>Calhoun County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Calhoun" class="cls-4" d="M127.15,32.97l12.02,.45,.32-2.87,13.34,.41-.7,.71-.13,1.02-1.07-.05,.17,1.09-.68,.69-.98,1.84-.09,1.36-.54,2.1,.71,.51-.73,.55,.94,.97-1.83,.46-1.04,.91,1.03,.77-.72,.21,.7,.76-.69,1.21-.8,.21,.67,.76-.84,.53-.44,1.06,.17,1.07,.68,.54-.74-.04-.57,.74,.23,.93-.66,1.07,.26,.5-1.04,.79-.28,1.47-.61,.05-.66,1.03-.86,.07,.12,.68-15.61-.44,.54-14.79,.4-9.33Z" />
+                </g>
+                <g id="Bay-svg" onmousemove="showTooltip(evt, '<strong>Bay County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Bay" class="cls-4" d="M92.2,43.73l.64-.16,1-1.19,1.4,.18,1.06-.44,.78,.68,1.36-.26,.79-.61,1-1.33,20.77,.82,.31-8.63,2.94,.08,2.89,.12-.4,9.33-.54,14.79-.41,11.78v6.48s-.92-.95-.92-.95l-1.17-.78-1.95-.71-.53,.12-1.05-.25-1.2-.71-1.78-1.66-1.69-2.06-.53-.76-.36-1.19-.75-.07-.95-.64-1.06-.55-.9-.32-2.45-1.31-1.87-1.46-1.1-1.25-1.4-1.33-2-1.53-3.74-2.56-2.5-1.55-4.1-2.18,.41-7.92Z" />
+                </g>
+                <g id="Jackson-svg" onmousemove="showTooltip(evt, '<strong>Jackson County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Jackson" class="cls-4" d="M121.42,4.45h.55s13.84,.09,13.84,.09l5.04,.12h.14s.36,.03,.36,.03l4.99,.11h.16s.14,0,.14,0l1.18,.03h.05s.16,0,.16,0h.19s1.23,.03,1.23,.03h.03s0,.23,0,.23l-.07,.68-.2,.45v.18s.05,.16,.05,.16l.05,.09,.24,.14h.11s.54,.17,.54,.17l.19,.09,.13,.14,.13,.27,.02,.16v.29s-.18,.49-.18,.49l-.03,.29-.06,.36,.02,.14,.16,.16,.3,.12,.22,.19,.1,.41,.13,.3,.59,.67,.21,.34,.16,.32,.37,.6,.08,.07,.05,.05,.11,.09,.08,.05,.08,.16v.25s-.15,.18-.15,.18l-.03,.18,.02,.18,.11,.18,.05,.14,.05,.16-.06,.16-.03,.16v.27s.1,.18,.1,.18l.19,.19,.05,.14,.02,.16v.11s-.06,.16-.06,.16l-.14,.18-.14,.22-.06,.2v.41s-.04,.27-.04,.27l.02,.23,.24,.44,.13,.37,.02,.16-.06,.36,.02,.27,.11,.21,.48,.8,.02,.14-.03,.25-.15,.4,.3,.32,.02,.5,.05,.09,.14,.07,.27,.05,.17-.09h.16s.16,.05,.16,.05l.08,.05,.48,.6,.1,.43,.08,.16,.49,.35,.29,.37,.29,.71,.37,.87-1.73,2.25-1.25,2.9-1.39,.83-13.34-.41-.32,2.87-12.02-.45-2.89-.12,.07-3.78,.44-10.6-2.86-.1,.1-2.88-6.67-.24,.33-1.9,1.17-2.55,1.65-2.18,1-.45,.12-2.31,1.79-1.43Z" />
+                </g>
+                <g id="Collier-svg" onmousemove="showTooltip(evt, '<strong>Collier County</strong> <br> 1 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Collier" class="cls-2" d="M329.55,314.43h1.58s0,.92,0,.92l4.33-.07,5.22-.05-.13-6.84,5.73-.13-.13-6,5.52-.04,3.09-.21,8.64-.12,.06,6.23,.28,11.17,23-.67,.13,5.71,.53,12.75,.11,11.48-35.36,.51-.24-.9-2.54-1.41-1.96-.71-2.08-1.77-1.91-1.12-.52-.2-.98-.04h-.29s-.57,.28-.57,.28l-.54,.52-.53,1.93-.31,.75-.4-.13-.26-.36-1.43-2.94-.29-.29-.55-.34-.3-1.61-.38-.7-.43-.5-.26-.72,.1-2.22-.17-.27-.4-.13-.29-.36-2.36-5.42-.45-4.21-.35-1.38-.13-2.24-.24-1.95-.76-3.8-.67-2.19-.09-.18Z" />
+                </g>
+                <g id="Hendry-svg" onmousemove="showTooltip(evt, '<strong>Hendry County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Hendry" class="cls-4" d="M345.91,285.36h6.25s.02-.98,.02-.98h1.43s0,.96,0,.96l15.42-.1,13.42-.2,3.35-12.57,.57,32.14,.02,1.59,.26,6.7-.08,.79,.15,4.91-23,.67-.28-11.17-.06-6.23-8.64,.12-3.09,.21-5.52,.04-.13-5.73-.11-11.17Z" />
+                </g>
+                <g id="Manatee-svg" onmousemove="showTooltip(evt, '<strong>Manatee County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Manatee" class="cls-4" d="M287.71,227.78l.28-.02,5.61-.02,9.38-.05h13.96s-.02,20.31-.02,20.31l-.03,8.61-11.55-.04,.04-11.71h-.94s-10.48,.03-10.48,.03l-.79-.14-10.65-.12-1.9-2.27-.99-.86,.06-.48-.99-2.86-.37-.84-.59-.88-1.08-1.14-.17-.52,.2-.04,2.01,1.07,.28,1.68,.74,.11,.26-.07-.03-.7,.17-.34,.54-.43,.74-.2,.65-.02,.28-.7,.82-1.2,1.16-1.27-.06-.77,.09-.16,.88-.59,.71-.14,.82-.84,.28-.45,.43-1.52,.23-.43Z" />
+                </g>
+                <g id="Escambia-svg" onmousemove="showTooltip(evt, '<strong>Escambia County</strong> <br> 1 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Escambia" class="cls-2" d="M27.35,1.18l-.17,.22-.25,.15-.13-.12-.14,.15-.12,.34-.71,.7-.69,.22-.66,.59-.44-.02-.62-.16h-.19s-.32,.41-.32,.41l-.1,.4-.27,.56-.29,.35-.54,.34-.33,.08-.33-.04-.46,.39-.24,.4-.14,.13v.16s.1,.16,.1,.16l.02,.07-.28,.15,.02,.25,.09,.43,.09,.55-.4,.32-.34,.19-.15,.31-.06,.22-.13,.52-.45,.28-.13,.52v.48s.25,.1,.25,.1l.04,.27,.13,.23v.36s.19,.32,.19,.32l.26,1.01-.24,.53-.43,.32-.07,.27,.1,.21,.11,.1-.11,.11-.05-.09-.11-.05,.05,.16-.06,.09-.11,.04-.17,.17,.13,.23,.16,.19-.06,.16-.11,.09,.1,.23,.13,.16,.05,.18,.09-.09,.13,.07-.06,.09-.14,.04-.09,.09v.14s.1,.07,.1,.07h-.14s-.03-.03-.03-.03l-.09,.09,.05,.14-.06,.16-.14,.08v.32s.06,.18,.06,.18l-.09,.2-.03,.07h-.05s-.06,.09-.06,.09v.16s.11,.5,.11,.5l.44,.54,.13,.1,.16,.14,.11-.04-.02-.07,.11-.06,.08,.09h.22s.49,.21,.49,.21l.08,.14v.02s.11-.13,.11-.13h.16s.05,.19,.05,.19l.13,.28v.45s-.19,.13-.19,.13l-.04,.38,.1,.19,.24,.28-.04,.29-.07,.31-.02,.36,.04,.41,.12,.3-.02,.43,.06,.61,.25,.67-.04,.29,.1,.34,.13,.07,.02,.18-.14-.03-.23,.13v.09s.12,.32,.12,.32l-.03,.11,.02,.14,.16,.12,.13,.1,.16,.14h.14s.13,.17,.13,.17l-.09,.22,.16,.23,.49,.16,.13,.3v.27s.4,.7,.4,.7l.4,.9,.72,.66,.73,.32,2.07,1.24,.98,1.51,.52,.77v.45s-.03,.38-.03,.38l-.33,.62-.43,1.14v1.84s-.48,1.09-.48,1.09l-4.31,1.51-.99,1.25v.7s.06,.59,.06,.59l.51,.32,.38,.17,.68,.16,.63,.07,.35,.26,.38,.06,.87-.46,.57-.32,.42-.07h.91s.56-.21,.56-.21l.78-.11,1.03-.23,.81-.24,1.39-.22,.86-.08,.91-.08,.86-.15,.94-.1,2.69-.46,1.31,.25-.02,.41,.02,.25-13.56,2.31-2.89,.34-3.54,.22-.82-.24-.7-.35-1.39,.31-1.78,.24-3.99,.88-5.64,.87v-.23s.53-.52,.53-.52l2.46-.58,.16-.61-1.22,.13-.41-.2-.18-.42,.35-.35,.53-.18,.96-.41,.11-.04,.17-.15,.46-.48,.09-.16v-.93s0-.29,0-.29l.03-.16,.12-.2,.43-.37,.21-.29v-.09s-.12-.3-.12-.3v-.14s.04-.18,.04-.18l.21-.29,.17-.11,.15-.36,.15-.22,.2-.17,.2-.06h.19s.35,.11,.35,.11h.22s.33-.07,.33-.07l.09-.06,.18-.24,.2-.15,.53-.18,.25-.15,.63-.47,.17-.17,.12-.22-.02-.25-.1-.28-.1-.16-.57-.23-.63-.12-.28,.06-.16-.05-.27-.12-.16-.23-.41-.09-.55-.57-.23-.35-.04-.39-.05-.07-.19-.12-.05-.09,.18-.26,.16-.4-.04-.32-.36-.65-.08-.09h-.19s-.11-.06-.11-.06l-.16-.21v-.09s.03-.04,.03-.04l.06-.07,.08-.02v-.07s-.06-.34-.06-.34l.02-.45,.7-1.42,.03-.04,.19-.04,.2-.24,.13-.38,.17-.08h.03s.02,.07,.02,.07l.08-.02,.11-.06,.12-.29v-.11s-.07-.12-.07-.12v-.02s.12-.15,.12-.15l.11-.06h.11s.25-.67,.25-.67l.16-1.06,.12-.22,.2-.06,.11-.09,.12-.2,.16-.42v-.05s-.08-.07-.08-.07v-.05s.07-.38,.07-.38l.06-.11,.06-.11v-.25s-.09-.89-.09-.89l-.04-.27,.06-.13-.07-.28-.16-.19h-.03s-.25-.65-.25-.65l-.07-.34,.03-.13-.02-.07-.32-.22-.38-.13-.29-.24-.29-.38h-.33s-.19-.14-.19-.14l-.13-.14-.08-.14-.32-.31-.11-.05-.34,.12-.51-.23-.08-.07-.15-.23-.22-.1-.26-.42-.02-.14-.08-.12-.32-.15-.54-.14-.03,.02-.27-.13-.15-.3-.36-.49-.64-.35-.51-.36-.15-.44v-.32s-.02-.43-.02-.43l-.02-.09-.29-.33-.21-.3,.06-.16v-.29s-.35-.51-.35-.51l-.05-.05h-.11s-.24-.24-.24-.24l-.05-.12-.21-.28-.21-.19-.22-.1-.25-.53-.29-.28-.32-.2-.35-.13-.35-.26-.04-.3-.1-.23-.13-.19-.3-.1-.27-.15,.03-.16-.1-.21-.37-.38-.11-.05-.05-.12,.04-.25,.09-.15-.05-.18-.1-.21-.37-.4,.31-.76,.03-.16,.32-.3,.14-.04,.06-.13v-.16s-.06-.25-.06-.25v-.25s.1-.09,.1-.09l.28-.15,.06-.18,.07-.29,.15-.38,.09-.15,.13-.33,.03-.16,.33-.64,.12-.18,.14-.11,.09-.15,.28-.67,.2-.85-.07-.32-.13-.26-.05-.21v-.09s.09-.15,.09-.15l-.02-.21-.18-.3-.11-.55v-.11s.03,0,.03,0l1.53,.04,1.29,.06,1.64,.09,2.22,.05h.03s.05,0,.05,0l.68,.03h.27s.03,.01,.03,.01l.17-.02,.16,.03h.33s.99,.06,.99,.06l.38,.02,3.26,.14h.22s.47,.03,.47,.03l1.23,.05,1.23,.03,.46,.04,.14-.02,.6,.02h.11s1.31,.08,1.31,.08h.27s.05,.01,.05,.01h.11s.05,0,.05,0h.08s.03,0,.03,0l.98,.15,.71-.02h3.51Z" />
+                </g>
+                <g id="Wakulla-svg" onmousemove="showTooltip(evt, '<strong>Wakulla County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Wakulla" class="cls-4" d="M164.87,51.41l26.53,.23,.36,1.93,9.41,.18-.19,11.76-.39,.2-.22,.02-.44-.21-.47,.08-.64,.53-.6-.35-.64,.49-1.23,.66-.61,.08-.63-.12-1.09-.99h-.19s-.09,.13-.09,.13l-.28,.06-1.66-.07-.49-.51-.07-.54-.52-.19-.75,.4-.17,.36-.09,.61,.19,.5-.04,.48-.37,.52-.72,.19-.44-.03-2.27,1.64-1.69,1.54,.2,1.36,.11,.21,.72,.06,.24,.59,.1,.95-5.47-1.15-.38-.32-.48,.67-.85-2.03-1.37,.95-1.3-.14-.56,.47,.29-.88-.68-.83-.74-.24-2.63-1.29-1.04-1.99-.94-.2-.64-1.42-.92-1.08,.34-.54-1.22-1.36-.08-1.45,.26-2.1-.55-.4-.18-1.95-1.06-.97,.15-.84-2.21-1.42,.47-1.35,.96-.89Z" />
+                </g>
+                <g id="Levy-svg" onmousemove="showTooltip(evt, '<strong>Levy County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Levy" class="cls-4" d="M252.61,119.23l1.04-1.24,.51-1.08,1.14,.46,.87-.54,.34-.75,.47,.27,1.73-1.1-.67-.3,.5-.52-.14-.7,1.73-1.03,.73-.72-.16-1.36,1.46-2.78,.95-.58,.18-3.08,.7-.29-.38-1.25,1.51-.99,.31-1.72,.42-.59,4.62,.02,4.81,.45,.92,.48,.03,1,5.76-.15v1.93s5.67-.13,5.67-.13l.02,3.81,3.48,.12v-.48s5.15,.02,5.15,.02l.2,17.78-7.59,.07-.04,11.19-2.41,1.11-.95-.14-.48,1.11-.62,.27-2.32-.91-1.31-.21-.81-.52-1.29,.2-.93,1.06-1.6,.83-.2,.57-.08,.02-.22-.43,.28-.45,.34-1.31-.36-1.84-1.34-.68,.14-.59-2.1-.19-.39-1.5,.84-.38,.48-.02,.11-.36,.03-.27-.39-1,.06-1.11-1.31-.77-1.79-.28-1.68,.04-2.04-.55-.56,.13h-.75s-1.67-.21-1.67-.21l-.28-.05-.44-.57-.25-.02-.25,.16-1.29,1.76-.06,.66-.64,.5-1.31,.2-.22-1.02-.64-.46,.42-1.18-.03-.34-.22-.54-.78-.84-.52-1.27,.76-2.08-.14-.5-.67-.73-1.06-.16-1.03-.66-.17-.25-1.06-.44-.17-.05-.64,.2-.31-.14Z" />
+                </g>
+                <g id="Okeechobee-svg" onmousemove="showTooltip(evt, '<strong>Okeechobee County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Okeechobee" class="cls-4" d="M370.25,227.5l15.72-.12,5.55-.14,.13,5.57,5.7-.06,.45,23.24,.11,5.57-12.1,10.91,.69-12.95-.44-.9-.71,.3-1.15-.69-.07-1.09-.37,.1-1.52-1.34-.52-.95-1.13,.49-.64-.9,.05-.97-.74-.31-.33-1.13,.04-1.77-.37-.45h-1.22s-.3-1.43-.3-1.43l-.74-.29-.26-.79,.79-.58-.09-.68-2.77-1.71-.99,.44-1.6-.96,.02-.63-1-.56,.15-1.45-.46-.86-1.52-1.07-.64-1.22-1.28-.49,.38-1.36-.92-1.19,1.34-1.87,.74-.08,.7-1.14,.54,.02,.07-1.11,.73-.44v-2.99Z" />
+                </g>
+                <g id="Lee-svg" onmousemove="showTooltip(evt, '<strong>Lee County</strong> <br> 2 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Lee" class="cls-5" d="M316.68,285.47h7.71s21.53-.11,21.53-.11l.11,11.17,.13,5.73,.13,6-5.73,.13,.13,6.84-5.22,.05-4.33,.07v-.93s-1.58,0-1.58,0l-1.39-3.16-1.96-2.12-.03-.36-.55-.72-.69-.61-.89-.56-1.09-.47-.43-.36-.17-.34,.06-.14-.2-.75-.66-.29-.97-.27-.72,.07-.26-.45,.25-.95-.38-1.56-1.52,.28-1.01-1.56-.6,1.16,.06,1.18,.63,1.27-.89,.09-1.37,.57h-.63s-.38-3.76-.38-3.76l-.4-1.31-.2-1.22-.95-3.83-.69-1.11-1.89-1.81,.11-.97,.37-.36,1.29-.14,.74,.07,.77,.22,.43,.57,.75,1.56,.37,.29,.4-.18,.37-1.29,.11-1.13,.28-.95,.79-1.7,.25-1.84Zm-11.9,4.76l.49-.32,.03-.32,.51,.11,.26,.79-.23,.39-.03,.34,.55,1.43,1.12,2.33,.26,1.54,1.04,2.85,.55,2.13,.6,1.65,.66,.84,1,.79,1.06,.04,.66,.22,1.89,1.22,.66-.73,.86-.27,1.43,.88,1.35,.13,.11,.02-.03,.16-2.89,1.75-.72,.23h-.46s-.89-.18-.89-.18l-1.69-.74-1.32-1.27-1.43-.81-.23-.25-.23-.32-.89-.99-1.32-3.71-.57-1.2-.92-1.61-.55-2.88-.77-1.4,.14-1.2-.29-.61,.23-1.04Zm-.47-6h.43s1.29,.25,1.29,.25l.51,.16,.69,.09,.14,.86-.63-.13-.68,.32-.46,.23-.17,2.97-.86-.16,.17-2.42-.29-1.83-.14-.32Z" />
+                </g>
+                <g id="Duval-svg" onmousemove="showTooltip(evt, '<strong>Duval County</strong> <br> 4 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Duval" class="cls-6" d="M316.64,54.34l12.36-12.85,1.23-1.12,1.01-1.41,.58,.16,.9-1.02,.08-1.07h1.46s.16-1.6,.16-1.6l.77-.87,.99,.54,.38-.39,1.68,.58,.09,.59,.98-1.66,1.4-.62,1.05,.02-.27,.66,.53,.54-.71,.34,.22,.52,1.04-.73,.5,.06-.32,.93,.67,.81,1.26-.44,.7,1.35,.71-.16,.52-.82-.15-1.15,.54-.73,.83,.22,1.12,1.98,1.66,.94,.47,.61-.24,.41,.39,.38,.8,.06,.89,.97,.26,3.96,.54,1.4,.09,3.99,.3,2.42,.38,1.94,.34,1.38-3.26,.07,.25,9.67-5.97,.18-.04-1.09-1.63,.17-.75-.54-2.47-.48-1.52,.8-1.69,.03-.7-1.56,.1-1.79,.6-1.23-1.19-.06-.16,.16-1.72-.28-1.77,.28-16.25,.23-.02-5.71Z" />
+                </g>
+                <g id="Lake-svg" onmousemove="showTooltip(evt, '<strong>Lake County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Lake" class="cls-4" d="M322.42,140.98l3.72-.02,13.34-.1-.07-5.75,1.17-.19-.12-5.35-.15-9.58,.46,2.1,.84,1.06,.29,1.47,1.26,.47,1.84-.08,.42,.79,1.29,.76,1.56,3.48,.15,1.7,.78,.29,1.28-.24,.71,.97-.07,1.2,.53,.09,.85,1.19,1.68,.76,1.3,1.64,.34,.93,1.18,.58-.36,.52-.41,1.41,.87,.58,.06,3.28-.83,1.16,.06,.36-.97,1.44-1.67,1.42-.41,1.02,.35,1.54-.05,.45h-6.87s-6.56,.04-6.56,.04v1.09s-.69,.19-.69,.19l.15,10.47v1.02s.54,.54,.54,.54l-.5,.98,.07,14.68-7.74,.09-.03-1.02-3.85,.02v1.06s-5.82,.07-5.82,.07l.1-35.75-.08-4.83Z" />
+                </g>
+                <g id="Suwannee-svg" onmousemove="showTooltip(evt, '<strong>Suwannee County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Suwannee" class="cls-4" d="M248.36,55.09l1.12-2.55,1.03-.83-.12-2.13,.8-.27,.37-1.74,1.22-.67,.72-1.02,.17-1.09,1.19-.13,.72-.88,2.15-.35,.46,.82,2.37-.33,1.51,.55,.31-.45,1.1,.71,.94,.09,3.3,2.46,.14-.5,.96,.14-.25,.75,.63,.64,1.41,.44,.74,1.16,.69-.38,1.21,.64,.64-.47,.27,.48v23.15s1.9,0,1.9,0l-.06,1.36-1.41,.72-.84,1.47-1.81,1.29-1.77,.11-.95,1.58-.88-.89-1.33,.24,.36-.54-.77-1.09,.31-.59-.6-1.79-1.11-.07-.58-1.11-.13-1.18-.83-.86-1.47-.32-.57-1.41-1.6-1.48-1.44-.73-.16-1.04-2.38-.65-.3-.86-.89,.45-1.63-.85-1.36,1.03-.94-.78-.64,.15-.74-.66,.04-1.45-.79-1.12,.34-1.11-.91-1-.05-1.11,.56-1.76-.74-.73,.34-1.45Z" />
+                </g>
+                <g id="Taylor-svg" onmousemove="showTooltip(evt, '<strong>Taylor County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Taylor" class="cls-4" d="M215.75,51.96l19.79,.15,.17,2.9,5.83,.02v3.92s-.12,.93-.12,.93l-.29,19.73h1.03s0,4.33,0,4.33h1.94s-.08,2.91-.08,2.91l-.98,1.17-.54,1.13,.05,1.09-.38,2.15-.81,1.15-.06,.72-1.86-.56-.78,.47-.03-.11-.11-.14-1.25-.46-.47,.02-.2,.11-.42-.07-1.58-.94-.02-.52-.58-.66-1.08-.55-1.44-.44-.52-.59-.47-.71-.6-1.25-.75-.46-.33-.5-.08-.57,.2-.18,.06-.32-.21-1.29-.54-1.07-.55-.57-.77-.39-1.08-2.89-1.24-.92-1.1-1.26-.41-.34-4.02-2.31-1.79-1.27-2.27-.43-.96-1.01-4.87-2.76-.14-.14,.11-.2-.08-.14-1.51-1.24-1.78-1.29-.04-.79,1.39-2.63-.24-.66,.72-.4,.55-2.24,1.16-.17,.83-2.26,.1-1.45,.72-.13,1.2-1.32,1.16-.19,1.39-.64,.98-1.48Z" />
+                </g>
+                <g id="Flagler-svg" onmousemove="showTooltip(evt, '<strong>Flagler County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Flagler" class="cls-4" d="M346.94,97.13l11.45-.3-.05-1.83,1.06,.69,.3-.57,1.06,.06,.8-.85,1.2,.26,1.13-.78h.83s.09,.22,.09,.22l2.83,7.36,2.34,5.3,1.29,3.11-2.69,.71-.39,.39,.17,2.35,.27,7.2-15.39,.47-.28-9.13-.75,.07-1.03,.58-1.45-.42-.52-1.81-.07-1.43-1.64-2.64-.34-.95-.23-8.06Z" />
+                </g>
+                <g id="Gadsden-svg" onmousemove="showTooltip(evt, '<strong>Gadsden County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Gadsden" class="cls-4" d="M156.83,24.1h.08s1.51,.08,1.51,.08l10.85,.78,2.2,.2,3.79,.27h.25s3.43,.31,3.43,.31l5.33,.27,.3,.03,5.25,.38-1.05,.32-.26,.65,.27,1.82-1.32,1.43-.8,1.62-2,.94-.42,.51-.6,3.09-.98,1.18,.48,1.21-.51,1.03-.87,.67-.82-.17-4.84,.89-.56,.69-1.72,.42-1.85,1.44-.88-.31-2.3,1.79h-1.93s.04-1.94,.04-1.94l-1.9-.04,.06-2.85-3.8-.03,.02-3.9-1.93-.02,.02-.97-3.8-.08,.07-4.78-2.81-.1,1.39-.83,1.25-2.9,1.73-2.25-.37-.87Z" />
+                </g>
+                <g id="Hernando-svg" onmousemove="showTooltip(evt, '<strong>Hernando County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Hernando" class="cls-4" d="M281.15,158.56h14.5s.03,1.89,.03,1.89l8.95-.12-.67,.75,1.01,.47-.2,.77,2.28,2.9,.56,1.27,.84-.09,1.86,.77,.53-.64,1.04,.52,.42,1.27,1.24,.16,.73,1.22,1.68-.41,.79,.68-.02,2.83-11.52,.03v2.88s-24.68,.09-24.68,.09l.06-.07,.2-.5-.34-1,.48-.5,.42-1.31,.03-.27-.11-.57-.22-.23,.06-1.27,.09-.54,.25-.14,.39-.97-.28-.32v-.29s.25-.91,.25-.91l.17-1.52-.56-1.02-.61-2.72,.34-3.08Z" />
+                </g>
+                <g id="Washington-svg" onmousemove="showTooltip(evt, '<strong>Washington County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Washington" class="cls-4" d="M101.28,23.28l1.31-2.32-.55-.79,.71-2.63,1.76,.07,2.17,.11-.03,.93,.96,.05-.11,1.9,6.64,.34-.03-1.72,1.01-1.72,.25-2.24,6.67,.24-.1,2.88,2.86,.1-.44,10.6-.07,3.78-2.94-.08-.31,8.63-20.77-.82-1,1.33-.79,.61-1.36,.26-.78-.68-1.06,.44-1.4-.18-1,1.19-.64,.16,.43-2.25,1.97-1.3h1.1s.95,.45,.95,.45l.86-.34,.74-1.77,.63,.29,1.09-1.51-.44-1.1-.72,.09-.33-.98,.46-2.39-.46-.24-.36-1.78-1.13-.71,.47-1.12-.34-1.53,1.41-1.25,1.36-.39-.46-1.12,1.83-1.49Z" />
+                </g>
+                <g id="Jefferson-svg" onmousemove="showTooltip(evt, '<strong>Jefferson County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Jefferson" class="cls-4" d="M201.17,53.75l.2-10.6,1.93-1.88,.05-3.87,3.64,.05-.5-1.84,.44-.06-1.08-1.46-.52-2.43,.08-4.12,7.2,.5,1.43,.11,1.95,.14,.58,.05,3.79,.27,3.79,.29h.17s3.52,.26,3.52,.26l.4,.86v3.72s-.95,0-.95,0l-.04,.97-.91-.03-.04,.97-1.9-.02v.97s-1.91-.02-1.91-.02v1s-1.22-.04-1.22-.04l-.65,1.04,.51,1.14-.05,2.36,.34,1.34-1.67,1.75-.37,1.45-1.77,.21-.1-.54-1.04,1.64,.8,1.98v1.09s-1.54,.37-1.54,.37v.63s-.99,1.48-.99,1.48l-1.39,.64-1.16,.19-1.2,1.32-.72,.13-.1,1.45-.83,2.26-1.16,.17-.55,2.24-.72,.4,.24,.66-1.39,2.63,.04,.79-.52-.8-1.35-.49-1.38-.02-.83,.12-.75,.37,.19-11.76Z" />
+                </g>
+                <g id="Volusia-svg" onmousemove="showTooltip(evt, '<strong>Volusia County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Volusia" class="cls-4" d="M338.04,116.86l13.52-3.77,.66-1.23,.75-.07,.28,9.13,15.39-.47-.27-7.2-.17-2.35,.39-.39,2.69-.71,3.27,7.82,4.76,10.5,1.29,2.43,2.19,3.05,.81,1.85,.92,1.66,5.38,8.85,3.24,5.51-13.62,.25,.34,11.69-1.32,.02-1.17-1.53,.33-.32-.58-1.78-.62-.38,.27-1.25-1.08-1.1-.1-1-1.45-1.64,.46-1.57-.35-1.36-1.03-1.64-.53,.23-1.19-.82-1.17,.49,.17,.47-.82,1.53-1.07-.03-1.31,.67-.26-1.02-.67,.35-.9-.67-.92-1.98-5.46-.06-2.25-.93,.41-.89-.88-1.1,.83-1.16-.06-3.28-.87-.58,.41-1.41,.36-.52-1.18-.58-.34-.93-1.3-1.64-1.68-.76-.85-1.19-.53-.09,.07-1.2-.71-.97-1.28,.24-.78-.29-.15-1.7-1.56-3.48-1.29-.76-.42-.79-1.84,.08-1.26-.47-.29-1.47-.84-1.06-.46-2.1-.82-1.54-1.01-.42-.45-1.18Z" />
+                </g>
+                <g id="Walton-svg" onmousemove="showTooltip(evt, '<strong>Walton County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Walton" class="cls-4" d="M71.09,3.13h.8s.27,.01,.27,.01h.25s3.42,.14,3.42,.14l.88,.05,1.84,.06h1.04s2.88,.1,2.88,.1h.38s.3,.04,.3,.04h.36s.33,.02,.33,.02l2.6,.13,3.42,.11,.22-.02,.99,.03-.74,19.04,10.96,.42-1.83,1.49,.46,1.12-1.36,.39-1.41,1.25,.34,1.53-.47,1.12,1.13,.71,.36,1.78,.46,.24-.46,2.39,.33,.98,.72-.09,.44,1.1-1.09,1.51-.63-.29-.74,1.77-.86,.34-.95-.46h-1.1s-1.97,1.31-1.97,1.31l-.43,2.25-.41,7.92-.22-.12-5.06-2.31-7.47-2.89-4.29-1.43-3.7-.87-1.86-.33,.99-20.78,.91-19.79Z" />
+                </g>
+                <g id="Brevard-svg" onmousemove="showTooltip(evt, '<strong>Brevard County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Brevard" class="cls-4" d="M393.13,151.47l1.32,2.25,3.69,5.16,1.81,2.83,1.95,2.39,.55,.83,.44,1.49,.4,2.08,1.52,3.42,.64,1.26-.08,.52-2.09,.94-.64,.67-.77,1.15-.46,1.32-.39,1.77-.17,1.82-.06,1.68,.28,3.51,.9,5.27,1.47,5.42,1.15,3.06,2.34,5.13,3.7,7.1v.09s-.44,.39-.44,.39l-2.12,.03-1.01,2.17-20.98,.29-.25-17.31h.37s-.23-17.34-.23-17.34l-.55-1.33-.94-1.17,.29-1.5-1.09-1.62,.64-.85-.27-1.4,1.37-.34-.69-1.31,.07-.77-3.26-2.16,.37-1.73-1.03-1.44,.19-.61-.96-.71-1.55-.5,1.32-.02-.34-11.69,13.62-.25Z" />
+                </g>
+                <g id="Osceola-svg" onmousemove="showTooltip(evt, '<strong>Osceola County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Osceola" class="cls-4" d="M339.84,181.32l9.85-.07,1.74-.08,21.08-.21,13.45-.12,.23,17.33h-.37s.25,17.31,.25,17.31h-.74s.53,5.85,.53,5.85l.11,6.05-15.72,.12,.62-.41-.04-.79-.74-.54-.27-1.47,.16-1.23-1.34-1.01,.19-1.11-.77-.6,.31-.5-1.38-2.05-1.07-2.48-1.88-1.32-.73,.21-1.31-.76-1.19-.28-.27-1.58-.52-.99,.33-1.36-1.73-.62,.1-1.2-.77-.92-1.59-.96-.61-1.67-1.92,.15-.46-1.26-.74-.85-1.08-.38,.02-.75,.84-.53,.66,1.04,3.15,2.06,.16-1.18,.7-.55-.21-1.58,.25-.55h.96s0-.98,0-.98l-6.38,.06-.06-3.85-3.95,.05-.03-3.83-1.97-3.84h-3.27s-2.53,.04-2.53,.04l-.04-5.8Z" />
+                </g>
+                <g id="Polk-svg" onmousemove="showTooltip(evt, '<strong>Polk County</strong> <br> 1 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Polk" class="cls-2" d="M316.72,183.7l2.05-.73,1.49,.38,.51,.84,1.63-.23v-2.4s5.82-.07,5.82-.07v-1.06s3.85-.02,3.85-.02l.03,1.02,7.74-.09,.04,5.8,2.53-.04h3.27s1.97,3.84,1.97,3.84l.03,3.83,3.95-.05,.06,3.85,6.38-.06v1s-.95-.01-.95-.01l-.25,.55,.21,1.58-.7,.55-.16,1.18-3.15-2.06-.66-1.04-.84,.53-.02,.75,1.08,.38,.74,.85,.46,1.26,1.92-.15,.61,1.67,1.59,.96,.77,.92-.1,1.2,1.73,.62-.33,1.36,.52,.99,.27,1.58,1.19,.28,1.31,.76,.73-.21,1.88,1.32,1.07,2.48,1.38,2.05-.31,.5,.77,.6-.19,1.11,1.34,1.01-.16,1.23,.27,1.47,.74,.54,.04,.79-.62,.41h-24.62s-28.69,.17-28.69,.17l-.04-13.48-.04-3.76-.14-17.42h-2.88s-.04-5.77-.04-5.77h2.93s-.01-3.54-.01-3.54Z" />
+                </g>
+                <g id="Bradford-svg" onmousemove="showTooltip(evt, '<strong>Bradford County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Bradford" class="cls-4" d="M295.6,77.51l1.61-.18,1.16-.64,.64,.14,.66-.57,.3-1.29,.97,.38,1.05-.07,1.91-2.81,.77-1.9,1.94-.41,1.05-1.23,1.19-.8,.52-.68,.44-1.61,1.27-.71,.52-1.13-.25-1.04,5.31-.02,.29,26.12-.19,1.88-.36,.02-.15-1.97-1.36-1.02,.14-.82-1.69-.47-.86-1.45v-1.22s-.53-.81-.53-.81l-2.64-.17-.64-.61-2.47,.19-.5-.47-1.72,.64-2.39-1.11-1.25-1.24-2.25-.04-1.3-.45-.5-1.83-.69-.59Z" />
+                </g>
+                <g id="Franklin-svg" onmousemove="showTooltip(evt, '<strong>Franklin County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Franklin" class="cls-4" d="M166.75,84.8l1.76-.38,2.35-1.27,1.24-1.07,.66,.15-.03,1.65-1.1,1.07-2.32,.98-2.2,.3-1.07-.7,.71-.73Zm-20.13-12.08l1.22-2.58-.13-.21,26.46,.72,.74,.24,.68,.83-.29,.88,.56-.47,1.3,.14,1.37-.95,.85,2.03,.48-.67,.38,.32,5.47,1.15,.09,.98,.16,.23,.15,1.25-.15,.7-.43,.88-.34,.18-1.72,.22-1.46-.57-1.08-.13-.61-.21-.52-.51-.45-1.03-1.06,.3-1.4,.66-.99-.18-1.37,.41-2.41,1.41-1.51,.74-.56,.53-2.02,1.35-.48,.6v.23s-.79,.35-.79,.35l-.8-.17-.47,.15-2.22,1.41-1.47,1.2-.42-.03-3.54,1.95-.75,.14-1.79,.85-.79,.55-.38,.74-.25-.03-.51-.87,.69-1.3,.75-1.12-.93-.83-.58-.08-.64,.19-.35,.67-1.03,1.47-.48,.33-1,.16-.3,1.01-.48,.38-.92,.39-2.53,.19-1.99-.56h-1.69s-1.14,.14-1.14,.14l1.17,2.09,1.48,.74,.17,2.18,3.31,1.3,6.4-2.86,5.93-2.15,2.74-2.33,2.9-2.32,.51,.76-4.92,4.57-5.77,2.29-4.16,2.11-3.23,1.5-2.35,.72-2.21-1.91-3.22-1.32-4.54-2.98-.19-.03,.16-.74,.95-1.41,5.65-4.2,1.71,.58,.63-1.05,1.69,.33,.21-.81,.88-.96v-1.04s-.63-.47-.63-.47l-.43-3.05-.56-1.15-.11-1.14,2.11-2.63-.41-1.37Z" />
+                </g>
+                <g id="Martin-svg" onmousemove="showTooltip(evt, '<strong>Martin County</strong> <br> 8 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Martin" class="cls-1" d="M397.8,255.99l23.03-.38v-1.65s-.5-.72-.5-.72l.48-.24-.02-1.2,5.03-.05,.36,.88,1.95,3.73,.48,1.53-.36,.41,.62,1.28,.69,2.09,1.33,2.56,1.41,3.53,.91,3.15-3.68,.05,.02,.93-25.79,.38-17.95,.19,12.1-10.91-.11-5.57Z" />
+                </g>
+                <g id="Glades-svg" onmousemove="showTooltip(evt, '<strong>Glades County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Glades" class="cls-4" d="M345.99,267.94l.97,.02,16.38-.07-.08-5.84,5.83-.1-.12-5.8,13.28-.22,1.52,1.34,.37-.1,.07,1.09,1.15,.69,.71-.3,.44,.9-.69,12.95-3.35,12.57-13.42,.2-15.42,.1v-.95s-1.44-.01-1.44-.01l-.02,.97h-6.25s.08-17.42,.08-17.42Z" />
+                </g>
+                <g id="Hillsborough-svg" onmousemove="showTooltip(evt, '<strong>Hillsborough County</strong> <br> 6 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Hillsborough" class="cls-10" d="M282.1,192.93l10.32,.1h21.42s2.88-.02,2.88-.02l.14,17.42,.04,3.76,.04,13.48h-13.96s-9.38,.06-9.38,.06l-5.61,.02-.28,.02,1.02-1.81,1.33-2.17,1.13-.88,.74-.05,.25-.2,.08-.45-.06-.36-.28-.5,.23-.23,1.22-.41,1.33-.79,.17-.25-.11-.39,.85-1.29,.06-.63,.42-.5,.48-.11,.54-1.65-.23-.93-.31-2.04-.65-1.25h-1.07s-1.13-.41-1.13-.41l-.48-.27,.03-.34-.14-.2-.93-.5-.71,.52-.06,.34,.2,1.29-.03,2.06,.45,.68,.51,.41,.17,.25-.23,1.38-.17,.09-.85-.09-1.24-.36-2.49-1.36,.06-.93,.85-.16,.31-.36,.2-.45-.56-.5-.2-.36,.06-.2,.34-.29,.28-.38-.14-1.93-.45-1.04-.73-1.2-1.3-.16-3.1-1.93-.68-1.2-.42-.23v-1.2s-.15-8.9-.15-8.9Z" />
+                </g>
+                <g id="Columbia-svg" onmousemove="showTooltip(evt, '<strong>Columbia County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Columbia" class="cls-4" d="M273.76,76.87l.84-1.47,1.41-.72,.06-1.36h-1.91s.01-23.16,.01-23.16l.16,.7,.8,.21,.86-.5,.91,.89,1.27-1.06,.38,.82,.83-.75,.75-.02,.5-.66-.3-.63,1.38-1.18,.28-1.38,.61-.23-.33-2.29-.99-.98,.3-.59-.88-.52-.08-.66-.91-.25-.57-2.09-.39,.07-.74-1.66,.77-.09-.68-1.81,1.13-.99v-.66s.97-.88,.97-.88h.03s5.97,.39,5.97,.39l.83,.07,.22,.02,.72,.05,.44,.02,.5,.05,.66,.05,3.69,.25,.17,9.33-.08,20.21,.33,.84-.19,1.2-.69,.57-1.72,.52-1.19,.86-.94,1.38-.53,2.33-1.63,.61-.17,1.29,.39,1.07,.8,.73,1.27,.36,.19,1.16-.67,1.02-.78-.2-1.33,.84,.14,1.38-.97,.47,.36,1.38-1.8,1.27-.78-.11-.2,1.02-.94,.54-.42-.32-2-.25-1-.89-1.44-.84-.94-1.32-.33-1.22-.58,.11-.33-.98,.22-1.09-.55,.16-.66-.64-.5,.2Z" />
+                </g>
+                <g id="Alachua-svg" onmousemove="showTooltip(evt, '<strong>Alachua County</strong> <br> 2 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Alachua" class="cls-5" d="M281.87,83.62l.42,.32,.94-.54,.2-1.02,.78,.11,1.8-1.27-.36-1.38,.97-.47-.14-1.38,1.33-.84,.78,.2,.67-1.02,.25-.27,2.36,.36,.69,.86,1.33-.34,1.72,.57,.69,.59,.5,1.83,1.3,.45,2.25,.04,1.25,1.24,2.39,1.11,1.72-.64,.5,.47,2.47-.19,.64,.61,2.64,.17,.53,.81v1.22s.87,1.45,.87,1.45l1.69,.47-.14,.82,1.36,1.02,.15,1.97,.31,.57-.32,3.49,.07,4.1v8.16s0,1.93,0,1.93l-1.45,.1-.53,.66-.64-.52-1.36,.64-.5-.41-.86,1.18-1.06-.65-1.53,.41-.78-.41-.33-.29,.08-2.27,1.37,.63-1.56-1.83h-.53s-10.47-.05-10.47-.05l-5.15-.02v.48s-3.48-.12-3.48-.12l-.02-3.81-5.68,.13v-1.93s-.11-17.51-.11-17.51Z" />
+                </g>
+                <g id="Miami-Dade-svg" onmousemove="showTooltip(evt, '<strong>Miami-Dade County</strong> <br> 17 abortion clinic(s) available here');" onmouseout="hideTooltip();" >
+                <path id="Miami-Dade" class="cls-8" d="M423.85,377.87l1.17-2.83,2.84-6.01,1.4-2.38-.02,2.31-1.53,4.74-2.69,4.65-.08,.16-.12-.13-.09-.29-.06-.11-.23-.13-.15-.09h-.17s-.26,.12-.26,.12Zm-36.35-29.32l-.11-11.48,11.44-.11,.02,1.45,19.49-.31,3.33-.06-.02-.91,.98-.04,6.69-.3,2.47-.09,.37-.05,.04,3.92-.13,2.15,.14,2.76-.12,1.54-.28,1.75v1.27s-.5,1.28-.5,1.28l-.05,.18-.36,.62-.5,2.52-.03,1.29,.09,.43-.13,.73-.35,.05-.97-1.32,.34-1.68,.33-.75-.09-.45-.41-.58-.7-.51-.78,.1-1.86,.8-.65,.56-.25,.48-.31,1.93-.89,1.96-.05,.43-.59,.98-.66,.44-.51,.58-.25,.57-.24,1.34,.02,1.18,.21,.49-.66,1.89-.63,.26-.26,.19-.6,2.21,.02,1.38,.16,.86,.57,1.46,.47,.38-.36,.96,.08,1.63,.32,.42,.58,.13,.24,.34-.22,.75-1.44,2.29-1.03,.61-.55,.17-.71,.67-.13,.77-.17,.27,.04,.68-.93,1.24,.02,1.27-.95,.02-.47,1.14-1.88-.22-1.92,1.05-.67-.15,.52,1.6-.55,.21-.59-.44-.59-.83-.44-.15-1.2,1.02-1.62,.25-.84,.15-.26,.03-1.3,.04-1.76,.66-1.47,.25-.79,1.19-1.52,1.06-.61,.1-.68-.92-1.13,.17-.02,.93-.23,.16-2.25-1.37-.59-.9-1.04-.21-.6,.78-1.1-.14-.49-.11-.55,.12-.05-4.37-.33-7.99h-.66s-.32-26.15-.32-26.15l-.04-2.94Z" />
+                </g>
+                <g id="Hamilton-svg" onmousemove="showTooltip(evt, '<strong>Hamilton County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Hamilton" class="cls-4" d="M247.13,30.57l4.81,.35,.74,.05,.63,.05,.39,.02,1.13,.12,.28,.02,14.36,1.02h.08s10.13,.73,10.13,.73v.02s.52,.02,.52,.02l-.97,.88v.66s-1.13,.99-1.13,.99l.68,1.81-.77,.09,.74,1.66,.39-.07,.57,2.09,.91,.25,.08,.66,.88,.52-.3,.59,.99,.98,.33,2.29-.61,.23-.28,1.38-1.38,1.18,.3,.63-.5,.66-.75,.02-.83,.75-.38-.82-1.27,1.06-.91-.89-.86,.5-.8-.21-.16-.7-.27-.48-.64,.47-1.21-.64-.69,.38-.74-1.16-1.41-.44-.63-.64,.25-.75-.96-.14-.14,.5-3.3-2.46-.94-.09-1.1-.71-.31,.45-1.51-.55-2.37,.33-.46-.82-2.15,.35-.72,.88-1.19,.13-.17,1.09-.72,1.02-.51-1.66-.88-.44-.66,.18-.82-.62,.23-2.15-.44-.8-1.02-.35,.24-2.76-.4-1.66-.79-.84,.28-.43-.38-1.43,.36-.34-.86-3.04Z" />
+                </g>
+                <g id="Sarasota-svg" onmousemove="showTooltip(evt, '<strong>Sarasota County</strong> <br> 2 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Sarasota" class="cls-5" d="M282.53,244.63l10.65,.12,.79,.14,10.48-.03h.94s-.04,11.71-.04,11.71l11.55,.04-.02,11.6-11.62-.04v5.8s-7.06-.06-7.06-.06l-1.48-2.56-1.08-2.36-1.57-2.63-.85-2.61-.28-.7-.23-.2-.46-1.81-2.08-4.37-1.62-3.08-.31-.45-.8-.52-.65-.7,.03-1.25-.4-.73-1.25-1.75-1.53-1.75-1.1-1.81Z" />
+                </g>
+                <g id="Liberty-svg" onmousemove="showTooltip(evt, '<strong>Liberty County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Liberty" class="cls-4" d="M141.81,57.52l-.12-.68,.86-.07,.66-1.03,.61-.05,.28-1.47,1.04-.79-.26-.5,.66-1.07-.23-.93,.57-.74,.74,.04-.68-.54-.17-1.07,.44-1.06,.84-.53-.67-.76,.8-.21,.69-1.21-.7-.76,.72-.21-1.03-.77,1.04-.91,1.83-.46-.94-.97,.73-.55-.71-.51,.54-2.1,.09-1.36,.98-1.84,.68-.69-.17-1.09,1.07,.05,.13-1.02,.7-.71,2.81,.1-.07,4.78,3.8,.08-.02,.97,1.93,.02-.02,3.9,3.8,.03-.06,2.85,1.9,.04-.04,1.93h1.93s-1.9,1.29-1.9,1.29l-.33,1.19-1.73,1.1,.75,.92-.71,1.26-.96,.89-.47,1.35,2.21,1.42-.15,.84,1.06,.97,.18,1.95,.55,.4-.26,2.1,.08,1.45,1.22,1.36-.34,.54,.92,1.08,.64,1.42,.94,.2,1.04,1.99,2.63,1.29-26.46-.72,.13,.21-1.22,2.58-.2-1.02-1.21-.3-.18-.68-1.02-.25-.73-.67-1.62-.6-1.19-1.34-.04-2.83-.96-.41,.54-.49-.23-.73,1.09-.56-.82-.27,.7-1.48-.36-1.16,.39-1.22,1.05-1.18Z" />
+                </g>
+                <g id="Indian-svg_River-svg" onmousemove="showTooltip(evt, '<strong>Indian River County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Indian_River" class="cls-4" d="M386.07,215.48l20.98-.29,1.01-2.17,2.12-.03,.45-.39v.07s3.84,7.82,3.84,7.82l1.98,6.4,.07,.93,.38,.81,.81,1.21,.4,1.87,.21,.77-20.97,.27-5.7,.06-.13-5.57-5.55,.14-.11-6.05-.53-5.84h.74Z" />
+                </g>
+                <g id="Marion-svg" onmousemove="showTooltip(evt, '<strong>Marion County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Marion" class="cls-4" d="M288.88,135.44l.04-11.19,7.59-.07-.2-17.78,10.47,.06h.53s1.56,1.83,1.56,1.83l-1.37-.63-.08,2.27,.33,.29,.78,.41,1.53-.41,1.06,.65,.86-1.18,.5,.41,1.36-.64,.64,.52,.53-.66,1.45-.1v-1.93s1.35-1.34,1.35-1.34l1.58-.69,2.31-.15,1.86-.85,1.26,.76,.19-.64,2.59-.06,1.06-.39v2.27s3.85-.09,3.85-.09l.08,3.85,1.92-.06,.05,3.87,4.18-.07,.71,2.22-1.09-.02-.33,.93,.45,1.18,1.01,.42,.82,1.54,.15,9.58,.12,5.35-1.17,.19,.07,5.75-13.34,.1-3.72,.02-20.62,.03-.25-.84-1.93-1.02-.98-.93-1.57-.34-.45-.7-.98,.36-2.32-2.29-1.65-.05-1.26,.72-1.51-.23-.03-.27Z" />
+                </g>
+                <g id="Orange-svg" onmousemove="showTooltip(evt, '<strong>Orange County</strong> <br> 4 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Orange" class="cls-6" d="M353.69,152.33l-.45,3.15-1.11,1.48-.98,.12v4.55s.1,.25,.1,.25l7.49-.02,.07,1.95,11.51-.28,8.22-.12,1.55,.5,.96,.71-.19,.61,1.03,1.44-.37,1.73,3.26,2.16-.07,.77,.69,1.31-1.37,.34,.27,1.4-.64,.85,1.09,1.62-.29,1.5,.94,1.17,.55,1.33-13.45,.12-21.08,.21-1.74,.08-9.85,.07-.07-14.68,.5-.98-.54-.54v-1.02s-.16-10.47-.16-10.47l.7-.19v-1.09s6.55-.05,6.55-.05h6.87Z" />
+                </g>
+                <g id="Putnam-svg" onmousemove="showTooltip(evt, '<strong>Putnam County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Putnam" class="cls-4" d="M316.4,90.98l.36-.02h1.17s1.24-1.39,1.24-1.39l1.77-.51,2.11-.03,.47-.57,.44-1.63,.8-.84,2.72-.44,2.29-1.76,.52-.66,8.63-.21,4.6-.12,.99,2.73,1.32,1.8,.95,.76,.16,9.04,.23,8.06,.34,.95,1.64,2.64,.07,1.43,.52,1.81,1.45,.42,1.03-.58-.66,1.23-13.52,3.77,.33-.93,1.09,.02-.71-2.22-4.18,.07-.05-3.87-1.92,.06-.08-3.85-3.84,.09v-2.27s-1.07,.39-1.07,.39l-2.59,.06-.19,.64-1.26-.76-1.86,.85-2.31,.15-1.58,.69-1.36,1.34v-8.16s-.07-4.1-.07-4.1l.32-3.49-.31-.57Z" />
+                </g>
+                <g id="Leon-svg" onmousemove="showTooltip(evt, '<strong>Leon County</strong> <br> 2 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Leon" class="cls-5" d="M168.79,45.66l2.3-1.79,.88,.31,1.85-1.44,1.72-.42,.56-.69,4.84-.89,.82,.17,.87-.67,.51-1.03-.48-1.21,.98-1.18,.6-3.09,.42-.51,2-.94,.8-1.62,1.32-1.43-.27-1.82,.26-.65,1.05-.32h.08s1.76,.1,1.76,.1l7.09,.51,.99,.1,1.35,.09,1.51,.09,.6,.03,.27,.03h.11s1.84,.16,1.84,.16l-.08,4.12,.52,2.43,1.08,1.46-.44,.06,.5,1.84-3.64-.05-.05,3.87-1.93,1.88-.2,10.6-9.41-.18-.36-1.93-26.53-.23,.71-1.26-.75-.92,1.73-1.1,.33-1.19,1.9-1.28Z" />
+                </g>
+                <g id="Gulf-svg" onmousemove="showTooltip(evt, '<strong>Gulf County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Gulf" class="cls-4" d="M125.8,75.35v-6.48s.41-11.78,.41-11.78l15.61,.44-1.05,1.18-.39,1.22,.36,1.16-.7,1.48,.82,.27-1.09,.56,.23,.73-.54,.49,.96,.41,.04,2.83,1.19,1.34,1.62,.6,.73,.67,1.02,.25,.18,.68,1.21,.3,.2,1.02,.41,1.37-2.11,2.63,.11,1.14,.56,1.15,.43,3.05,.63,.47v1.04s-.88,.96-.88,.96l-.21,.81-1.69-.33-.63,1.05-1.71-.58-5.65,4.2-.95,1.41-.16,.74-1.99-.25-1.77-.22-1.64,.12-1.4,.6-.26,.31-.29,.47-.91-1.4-.61-1.17-.93-2.81-.82-3.92-.2-1.93,.11-.9,.21-.67,.47-.85,1.07-.81-.08,2.2-.1,1.83,.09,1.91,.41,2.32,.59,2.89,.53,.9,.94,.36,.98-.38,1.02-1.79,.39-4.73-.04-.73-.13-.21-.38-.24-.15-.53v-.54s.1-.11,.1-.11l-.24-.44-.43-.42-.41-.08-.24-.21-.54-1.51-.93-1.81-1.15-1.48-.22-.23Z" />
+                </g>
+                <g id="Pasco-svg" onmousemove="showTooltip(evt, '<strong>Pasco County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Pasco" class="cls-4" d="M280.53,175.78l24.69-.09v-2.88s11.52-.03,11.52-.03l-.02,10.92v3.56s-2.92-.01-2.92-.01l.04,5.78h-21.42s-10.32-.09-10.32-.09l-8.94,.07,.43-1.04,2.03-2.06-.08-.07v-1.61s.32-.63,.32-.63l.73-.47,.79-2.01-.17-.57,.26-1.63,.9-1.33,.57-1.49v-2.2s.51-1.25,.51-1.25l.76-.5,.31-.36Zm-8.8,17.22l-1.04,.02-.28-.05-.39,.02-.03-.14-.05-2.83,.82-.77,.98,.71v3.04Z" />
+                </g>
+                <g id="Holmes-svg" onmousemove="showTooltip(evt, '<strong>Holmes County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Holmes" class="cls-4" d="M91.06,3.82l2.05,.09,5.95,.15,8.11,.14,.03-.04,9.62,.2,4.6,.1-1.79,1.43-.12,2.31-1,.45-1.65,2.18-1.17,2.55-.33,1.9-.25,2.24-1.01,1.72,.03,1.72-6.64-.34,.11-1.9-.96-.05,.03-.93-2.17-.11-1.76-.07-.71,2.63,.55,.79-1.31,2.32-10.96-.42,.74-19.04Z" />
+                </g>
+                <g id="Nassau-svg" onmousemove="showTooltip(evt, '<strong>Nassau County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Nassau" class="cls-4" d="M351.07,38.55l-.47-.61-1.66-.94-1.12-1.98-.83-.22-.54,.73,.15,1.15-.52,.82-.71,.16-.7-1.35-1.26,.44-.67-.81,.32-.93-.5-.06-1.04,.73-.22-.52,.71-.34-.53-.54,.27-.66-1.05-.02-1.4,.62-.98,1.66-.09-.59-1.68-.58-.38,.39-.99-.54-.77,.87-.16,1.61h-1.46s-.08,1.05-.08,1.05l-.9,1.02-.58-.16-1.01,1.41-1.23,1.12-12.36,12.85-.05-5.87,.11-.05,.41-.45,.22-.52,.05-.48-.31-.77-.06-.43,.05-.43,.05-.29,.36-.52-.03-.38-.17-.43,.05-.25,.36-.43,.11-.16,.14-.68,.11-.63,.33-.52,.05-.25-.03-.57-.06-.29,.14-.23,.05-1.16-.06-.34-.06-.09-.11-.29,.03-.48,.3-1.25,.44-.89-.17-.91-.22-1.09-.19-.54-.06-.05-.61-.22v-.05s.03-.43,.03-.43l-.11-.57-.3-.52-.22-.23-.11-.27,.03-.25-.03-.16-.14-.41-.22-.14-.19-.25-.06-1.38,.49-1.07,.3-.93-.09-.79-.08-.29-.11-.14-.14-.29,.14-.32,.05-.2,.03-.68,.05-.09,.16-.11,.19,.02,.22-.02,.6-.3,.3-.39,.05-.14-.36-.84-.36-.47,.03-.23,.05-.09,.33-.25,.52-.07,.17,.07,.55,.38,.25,.29,.11,.09,.44,.22,.11,.02,.3-.14,.63-1.2,.03-.25-.03-.54v-.34s.02-.27,.02-.27l.14-.23,.57-.41h.36s.28,.11,.28,.11l.17,.29,.06,.07,.58,.18,.77,.11,.25-.09,.16-.11,.05-.14,.19-.05,.19,.04,.17,.11,.08,.23,.5,.7,.33,.36,.47,.45,.91-.12,.36,.27,.25,.23,.08,.04,.77-.19,1.04-.07,.11,.02,.8,.34,.47,.72,.08,.25,.22,.11,.22-.02,.14-.07,.14-.2,.11-.09h.27s.25,.16,.25,.16l.22,.2,.22,.09,.22,.04,.06,.02,.08,.07,.06,.07,.03,.11,.03,.16,.03,.05,.58,.63,.3,.18,.41,.13,1.43-.26,.11,.09,.06,.2,.06,.07,.11,.11,.91,.15,.16-.09,.03-.07,.05-.23,.05-.07,.16-.05h.14s.33,.09,.33,.09l.25,.18,.03,.14-.03,.29v.23s.09,.18,.09,.18l.08,.07,.17,.07,.74-.14,.19-.18,.27-.05,.17,.11,.06,.11,.08,.32,.11,.18,.47,.09,.08-.09,.14-.23,.08-.11,.16-.07,.41,.18,.41,.11,.74,.09,.11,.04,.3,.25,.25,.16,.52-.09,.19,.07,.14,.09,.11,.04,.14,.02h.08s.11,0,.11,0l.08-.07,.11-.11,.05-.11,.03-.14,.08-.11,.14-.07,.11-.05,.39,.06h.3s.52-.05,.52-.05l.99-.21h.14s.19,.16,.19,.16l.47,.59,.17,.09,.47,.15,.25,.04,.63,.06,.27-.03,.64,.42,.31,.34-.18,1.88-.65,4.54,.05,3.01,.51,2.15-.49,.84Z" />
+                </g>
+                <g id="Monroe-svg" onmousemove="showTooltip(evt, '<strong>Monroe County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Monroe" class="cls-4" d="M411.11,387.96l-.52-1.6,.67,.15,1.92-1.05,1.88,.22,.47-1.14,.95-.02-.02-1.27,.93-1.24-.04-.68,.17-.27-.03,.23,.68,1.1,1.64-.32,2.83-1.97,1.07-1.94,.11-.27,.26-.12h.17s.15,.08,.15,.08l.23,.13,.06,.11,.09,.29,.12,.13-1.85,3.48-2.53,4.44-1.75,4.67-2.87,3.29-2.46,2.08-2.56,3.08-4.68,4.92-5.08,3.79-.68-.67,4.12-3.91,3.2-3.08,2.84-2.33,1.61-3.02,.42-2.66-.03-1.95,1.07-1.83-1.32-1.27-1.27,.43Zm-15.56,23.02l1.32-1.01,1.46-1.74,.37-.71,.3,.63,.6,1.21-1.05,1.44-1.79,1.09-1.2-.91Zm-5.91,3.61l.02-.97,1.01-.35,.98-.87,1.45-.49,.73,.22-.45,1.07-.11,.43-.34,.39-1.44,.74-1.54-.12-.26,.03-.03-.07Zm-16.34,6.56l2.4-1.16,2.57-1.27,3.15-1.15,3.06-1.67,1.72,.5-.42,1.18-6.45,2.86-3.18,1.8-1.77,.11-1.09-1.21Zm-21.15-72.09l35.36-.51,.04,2.94,.32,26.16h.66s.33,7.98,.33,7.98l.05,4.37-1.04,.17-1.44,.83-.11,.54,.18,.41-.11,.52-.9-.1-1.62,.47-.87-.08-.84,.12-1.64,.68-.61-.08-.81-.24-1.65,.09-1.73,.65-.9-.56-1.05-1.19-.53-.45-.76-.26-.47-.49-.07-1.24-.27-.68-.53-.99-1.02-.92,.07-1.54,.14-.5,.35-2.43,.17-.57,.4-.46,.19-.84-.18-.43,.23-.55,.46-.55,.37-.12,.75,.26,.17-.43,.05-.63-.68-1.69-.75-.04-.55-.38-.04-.79,.23-.34,.03-.2-1.37-3.7-.64-.76-.76-.6-.97-1.33-.12-.79,.39-1.14-.06-.32-.32-.63-.96-.65-.44-.97-.04-.88-.44-.81-1.86-1-.1-1.54-.99-1.33-.08-1.95-1.28-.98-1.58,.67-.72,.21-.32-.9v-1.68s-1.58-1.34-1.58-1.34l-.13-1.81-1.82-.41-.58-.67-2.63-.61Zm-19.98,81.55l.72-1.68,2.25-3.16,.95-1.18,4.37-2.63,5.24-2.5,.8-1.3,2.09-.65,2.28-1.76,3.24-1.41,3.97,2.03,3.15,.97,1.23,.76,.78,2.96,2.96,2.37-.84,.64-3.33,1.16-2.99,1.09-2.32,.52-.65-1.53-1.89,.29-2.01-.19-1.83,.24-.54,1.41-2.5,.77-3.16,1.61-1.94,.71-1.25,.12-1.22,.98-5.38,.57-2.24,.33,.05-1.54Zm-12.22,1.75l2.3-.37,3.49-.94,1.92-.64,.73,.56-.78,.8-1.42,1.64-3.66,.81-2.62-.42,.05-1.43Zm-8.97-1.31l.81-.86,.46-1.11,.46-.25,.58-.02,1.28,.61,.18,.23,.12,.79-.32,.75-.73,.79-2.56,.07-.35-.25,.06-.75Zm-46.16-4.61l.99-.22,2.21-.49,.98,1.27-1.84,.88-2.44-.3,.09-1.13Z" />
+                </g>
+                <g id="Santa-svg_Rosa-svg" onmousemove="showTooltip(evt, '<strong>Santa Rosa County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Santa_Rosa" class="cls-4" d="M27.35,1.18h.03s1.23,.03,1.23,.03l.87,.08,.36-.03,2.82,.13h.27s.57,.03,.57,.03h.79s.19,.04,.19,.04l.52,.02,1.29,.05,.33,.06,4,.2,2.24,.11,.85,.03,2.33,.09h.08s2.52,.12,2.52,.12l-1.4,24.46-.1,.56-.85,15.21-2.88,.26-3.38,.44-.53,.09-.02-.25,.02-.41-1.31-.25-2.69,.46-.94,.1-.86,.15-.91,.08-.86,.08-1.39,.22-.81,.24-1.03,.23-.78,.11-.56,.2h-.91s-.42,.08-.42,.08l-.57,.32-.87,.46-.38-.06-.35-.26-.63-.07-.68-.16-.38-.17-.51-.32-.06-.59v-.7s.99-1.25,.99-1.25l4.31-1.51,.49-1.09v-1.84s.42-1.14,.42-1.14l.33-.62,.04-.38v-.45s-.53-.77-.53-.77l-.98-1.51-2.07-1.24-.73-.32-.72-.66-.4-.9-.41-.7v-.27s-.11-.3-.11-.3l-.49-.16-.16-.23,.09-.22-.13-.16h-.14s-.16-.15-.16-.15l-.13-.1-.16-.12-.02-.14,.03-.11-.12-.32v-.09s.23-.13,.23-.13l.14,.03-.02-.18-.13-.07-.1-.34,.04-.29-.25-.67-.06-.61,.02-.43-.12-.3-.04-.41,.02-.36,.07-.31,.04-.29-.24-.28-.1-.19,.04-.38,.2-.13v-.45s-.13-.28-.13-.28l-.05-.18h-.16s-.12,.12-.12,.12v-.02s-.08-.14-.08-.14l-.49-.2h-.22s-.08-.1-.08-.1l-.11,.06,.02,.07-.11,.04-.16-.14-.13-.1-.44-.54-.12-.5v-.16s.07-.09,.07-.09h.05s.03-.06,.03-.06l.09-.2-.07-.18v-.32s.15-.08,.15-.08l.06-.16-.05-.14,.09-.09,.03,.02h.14s-.11-.07-.11-.07v-.14s.09-.09,.09-.09l.14-.04,.06-.09-.13-.07-.09,.09-.05-.18-.13-.16-.1-.23,.11-.09,.06-.16-.16-.19-.13-.23,.17-.17,.11-.04,.06-.09-.05-.16,.11,.05,.05,.09,.11-.11-.11-.1-.1-.21,.07-.27,.43-.32,.24-.53-.26-1.01-.18-.32v-.36s-.14-.23-.14-.23l-.04-.27-.24-.1v-.48s.12-.52,.12-.52l.45-.28,.13-.52,.06-.22,.15-.31,.34-.19,.4-.32-.09-.55-.09-.43-.02-.25,.28-.15-.02-.07-.1-.16v-.16s.15-.13,.15-.13l.24-.4,.46-.39,.33,.04,.33-.08,.54-.34,.29-.35,.27-.56,.1-.4,.32-.4h.19s.62,.15,.62,.15l.44,.02,.66-.59,.69-.22,.71-.7,.12-.34,.14-.15,.13,.12,.25-.15,.17-.22Z" />
+                </g>
+                <g id="St.-svg_Johns-svg" onmousemove="showTooltip(evt, '<strong>St. Johns County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="St._Johns" class="cls-4" d="M337.75,64.3l1.69-.03,1.52-.8,2.47,.48,.75,.54,1.63-.17,.04,1.09,5.97-.18-.25-9.67,3.26-.07,1.44,5.95,2.78,12.73,.8,2.69,.37,.88,.73,.97,.34,1.13,.35,1.65,.11,2.47,.41,2.37,.92,2.98,.71,1.62,.95,2.89h-.83s-1.13,.79-1.13,.79l-1.2-.26-.8,.85-1.06-.06-.3,.57-1.06-.69,.05,1.83-11.45,.3-.16-9.04-.95-.76-1.32-1.8-.99-2.73-1.04-2.3-.55-2.67,.52-1.48-.12-1.18-1.37-1.69-2.64-1.66-1.06-1.58v-2.11s.48-1.29,.48-1.29v-2.54Z" />
+                </g>
+                <g id="Pinellas-svg" onmousemove="showTooltip(evt, '<strong>Pinellas County</strong> <br> 5 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Pinellas" class="cls-9" d="M271.73,193v2.22s.55,2.9,.55,2.9l.44,2.15,1.72,.39-.05-3.33,.14-1.4-.31-1.13-.25-.5-.48,.04-.54-.21,.2-1.13,8.94-.07,.15,8.9v1.2s-1.24-.68-1.24-.68l-1.04,.18-.14,.02,.62,1.81-.76,1.06,.45,.79-1.84,.88-.25,.18-.2,.5,.22,.77,.59,.54,1.07,.23,.37,.57,.82,.21,2.51,.19-.37,.43,.14,.84,1.27,1.16,.68,1.07,.23,.93,.31,.5,.17,1.27-1.22,1.18-.54,.72-.37,.52-.46,1.72,.31,1.38-.03,.39-.45,1.09-.37,.43-.74,.25-.62-.14-.51-.25h-.34s-.09,.72-.09,.72l-.03,.02-.82-.36-1.19,.11-.28,.43-.26,1.38,.08,.48,.31,.82,.23,.32,.85,.52-.43,.88-1.65,.81-.2-.29-.48-1.95-.05-.88,.43-1.2,.03-1.86-.14-.75-.34-.86-.42-.34-.42-.59-.53-1.5-.76-1.04-.42-.52-1.75-1.48-.48-.55-1.04-2.13-.14-.59-.11-1.52,.2-1.56,.4-1.79,.57-1.65,.18-3.83-1.12-3.72-.08-.79-.57-5.51,.39-.02,.28,.05,1.04-.02Z" />
+                </g>
+                <g id="Citrus-svg" onmousemove="showTooltip(evt, '<strong>Citrus County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Citrus" class="cls-4" d="M288.88,135.44l.03,.27,1.51,.23,1.26-.72,1.65,.05,2.32,2.29,.98-.36,.45,.7,1.57,.34,.98,.93,1.93,1.02,.25,.84,.81,.75,.11,.72,1.04,1.79,.23,.91,1.82,1.38,.37,1.04,.79,.52,.98,1.15,1.32,.88,.2,1.22,.59,.68-.87,.64-.3,1.61-1.23,.32-2.21,2.41,.03,1.06-.64,1.25-.19,1-8.95,.12-.03-1.9h-14.5s0-.08,0-.08l-2.52-1.66,.82-2.38-1.84-6.17,2.42-3.64-.81-1.81-.36-.2-.86-1.16-.67-1.34-.14-1.45-1.2,.16,.2-.57,1.6-.83,.93-1.06,1.29-.2,.81,.52,1.31,.21,2.32,.91,.62-.27,.48-1.11,.95,.14,2.41-1.11Z" />
+                </g>
+                <g id="Madison-svg" onmousemove="showTooltip(evt, '<strong>Madison County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Madison" class="cls-4" d="M227.85,29.14l6.35,.42,2.89,.25,.52,.03,.58,.05,2.25,.15,.58,.05,1.26,.1,.93,.08,1.65,.13h.14s2.12,.17,2.12,.17l.86,3.04-.36,.34,.38,1.43-.28,.43,.79,.84,.4,1.66-.24,2.76,1.02,.35,.44,.8-.23,2.15,.82,.62,.66-.18,.88,.44,.51,1.66-1.22,.67-.37,1.74-.8,.27,.12,2.13-1.03,.83-1.12,2.55-.41,.02-6.41-.07-5.83-.02-.17-2.9-19.79-.15v-.63s1.56-.37,1.56-.37v-1.09s-.82-1.98-.82-1.98l1.04-1.64,.1,.54,1.77-.21,.37-1.45,1.67-1.75-.34-1.34,.05-2.36-.51-1.14,.65-1.04,1.21,.04v-1s1.91,.02,1.91,.02v-.97s1.91,.02,1.91,.02l.04-.97,.91,.03,.04-.97h.94s0-3.71,0-3.71l-.4-.86Z" />
+                </g>
+                <g id="Dixie-svg" onmousemove="showTooltip(evt, '<strong>Dixie County</strong> <br> 0 abortion clinic(s) available here');" onmouseout="hideTooltip();">
+                <path id="Dixie" class="cls-4" d="M238.65,94.19l.78-.47,1.86,.56,.06-.72,.81-1.15,.38-2.15-.05-1.09,.54-1.13,.98-1.17,.08-2.92,20.58-.06,2.19,.1-.84,.97,.86,.98-.83,.54-.87,2.1,.64,.66-.64,1.2,.6,1.68-.75-.21-.4,2.24,.41,.52-.31,1.52-.92,.97,.08,1.04,.97,1.52,1-.38-.42,.59-.31,1.72-1.51,.99,.38,1.25-.7,.29-.18,3.08-.95,.58-1.46,2.78,.16,1.36-.73,.72-1.73,1.03,.14,.7-.5,.52,.67,.3-1.73,1.1-.47-.27-.34,.75-.87,.54-1.14-.46-.51,1.08-1.04,1.24-.19-.11-.41-1.57-.08-.91,.08-.09,.06-1.02-.8-1.23-.64-.71-.07-1.36-.88-1.73-1.3-.85-1.34-.17-.47,.22-1.31-.37-.69-1.45-.05-.61-.19-.43-.67-.1-.47,.09-1.08-.91-.36-.71h-.78s-.53-.26-.53-.26l-.27-.61-.92-.28-.08-.41,.12-.63-.31-2.99,.04-1.16,.31-1.13-.24-1.84-.46-1.73Z" />
+                </g>
+            </g>
+            </svg>
+            <script>
+              function showTooltip(evt, text) {
+              let tooltip = document.getElementById("tooltip");
+              tooltip.innerHTML = text;
+              tooltip.style.display = "block";
+              tooltip.style.left = evt.pageX + 10 + 'px';
+              tooltip.style.top = evt.pageY + 10 + 'px';
+              }
+    
+              function hideTooltip() {
+              var tooltip = document.getElementById("tooltip");
+              tooltip.style.display = "none";
+              }
+            </script>
         </div>
         <br>
         <br>

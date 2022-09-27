@@ -1,5 +1,7 @@
 .DS_Store
 planning/
+original.html
+cleaned-fl-map.svg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

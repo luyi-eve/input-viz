@@ -1,7 +1,8 @@
 # Input Visualization
+## Phase 1: Collecting (using visuals to gather data)
 
-This is a class project instructed by Vinicius Sueiro	at Advanced Infographics and Data Visualization class
+This is an input visualization instructed by Vinicius Sueiro. 
 
-that demonstrates binding data to HTML with [D3.js](https://d3js.org).
+- The goal of this project is to use visuals to collect data with advanced knowledge of Javascript.
+- The topic of this project is 
 
-The original creator of this demo is Mitchell Thorson, click [here](https://github.com/mitchthorson/lede-2022-dataviz/tree/main/01-web-viz) to visit his work!

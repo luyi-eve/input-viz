@@ -9,7 +9,6 @@ This is an input visualization instructed by [Vinicius Sueiro](https://vsueiro.c
 2) The second part of the project is 
 - 
 - , users will be able to check if their guesses is right or not by hovering on each county, the exact number will pop up for you to review.
-![image](https://user-images.githubusercontent.com/107573330/193370369-26ac752e-0bd0-43f8-8709-e66370a70dd0.png)
 
 
 
